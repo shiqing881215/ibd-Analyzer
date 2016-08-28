@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +28,8 @@ import com.google.common.collect.Maps;
 
 public class Analyzer {
 
-	private static final String rootDirectory = "/Users/Rossi/Documents/IBD/";
+	private static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
+	private static final String RESULT_DIRECTORY = "results/";
 	private static List<String> spreadsheets = Lists.newArrayList();
 	
 	public Map<String, StockAnalyzeResult> analyze() {
@@ -59,12 +63,12 @@ public class Analyzer {
 	}
 	
 	private void getAllSpreadsheets() {
-		File root = new File(rootDirectory);
+		File root = new File(ROOT_DIRECTORY);
 		File[] files = root.listFiles();
 		
 		for (File file : files) {
 			if (file.isFile() && !file.getName().equals("result.xls") && file.getName().endsWith(".xls")) {
-				spreadsheets.add(rootDirectory + file.getName());
+				spreadsheets.add(ROOT_DIRECTORY + file.getName());
 			}
 		}
 	}
@@ -98,8 +102,10 @@ public class Analyzer {
 		}
 		
 		try {
+			DateFormat df = new SimpleDateFormat("MM_dd_yy");
+			String fileName = df.format(new Date());
 			FileOutputStream out = 
-					new FileOutputStream(new File(rootDirectory + "result.xls"));
+					new FileOutputStream(new File(ROOT_DIRECTORY + RESULT_DIRECTORY + fileName + ".xls"));
 			workbook.write(out);
 			out.close();
 			workbook.close();
