@@ -12,7 +12,7 @@ public interface Strategy {
 	
 	/**
 	 * Extract specific data from the spreadsheet based on the strategy.
-	 * @return
+	 * @return A {@link StockList} to represent this spreadsheet
 	 */
 	public StockList extract(String filePath);
 }

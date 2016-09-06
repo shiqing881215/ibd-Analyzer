@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -17,22 +16,29 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
-import org.shiqing.ibd.model.Stock;
+import org.shiqing.ibd.analyzer.Analyzer;
+import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.model.StockAnalyzeResult;
 import org.shiqing.ibd.model.StockList;
+import org.shiqing.ibd.model.StockListAnalyzeResult;
 import org.shiqing.ibd.strategy.RatingStrategy;
 import org.shiqing.ibd.strategy.Strategy;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
-public class Analyzer {
+/**
+ * Main program to run to get analyze results.
+ * 
+ * @author shiqing
+ *
+ */
+public class IBDAnalyst {
 
 	private static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
 	private static final String RESULT_DIRECTORY = "results/";
 	private static List<String> spreadsheets = Lists.newArrayList();
 	
-	public Map<String, StockAnalyzeResult> analyze() {
+	public StockListAnalyzeResult analyze() {
 		List<StockList> stockLists = Lists.newArrayList();
 		getAllSpreadsheets();
 		
@@ -42,24 +48,9 @@ public class Analyzer {
 			stockLists.add(strategy.extract(spreadsheet));
 		}
 		
-		Map<String, StockAnalyzeResult> result = Maps.newHashMap();
+		Analyzer analyzer = new FullAnalyzer();
 		
-		for (StockList stockList : stockLists) {
-			for (Stock stock : stockList.getStocks()) {
-				String symbol = stock.getSymbol();
-				// If exists, update occurance and involvedSpreadsheets
-				if (result.containsKey(symbol)) {
-					result.get(symbol).setOccurance(result.get(symbol).getOccurance() + 1);
-					result.get(symbol).getInvolvedSpreadsheets().add(stockList.getName());
-				} else { 
-					StockAnalyzeResult stockAnalyzeResult = new StockAnalyzeResult(
-							symbol, stock.getCompanyName(), 1, Lists.newArrayList(stockList.getName()));
-					result.put(symbol, stockAnalyzeResult);
-				}
-			}
-		}
-		
-		return result;
+		return analyzer.analyze(stockLists);
 	}
 	
 	private void getAllSpreadsheets() {
@@ -73,15 +64,15 @@ public class Analyzer {
 		}
 	}
 	
-	private void printOutResult(Map<String, StockAnalyzeResult> result) {
+	private void printOutResult(StockListAnalyzeResult result) {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("Result");
 		
-		Set<String> keyset = result.keySet();
+		Set<String> keyset = result.getResult().keySet();
 		int rownum = 0;
 		for (String key : keyset) {
 			Row row = sheet.createRow(rownum++);
-			StockAnalyzeResult stockAnalyzeResult = result.get(key);
+			StockAnalyzeResult stockAnalyzeResult = result.getResult().get(key);
 			int cellnum = 0;
 			
 			Cell symbolCell = row.createCell(cellnum++);
@@ -91,8 +82,8 @@ public class Analyzer {
 			
 			symbolCell.setCellValue(stockAnalyzeResult.getSymbol());
 			nameCell.setCellValue(stockAnalyzeResult.getName());
-			occuranceCell.setCellValue(stockAnalyzeResult.getOccurance());
-			if (stockAnalyzeResult.getOccurance() >= 3) {
+			occuranceCell.setCellValue(stockAnalyzeResult.getOccurrence());
+			if (stockAnalyzeResult.getOccurrence() >= 3) {
 				CellStyle style = workbook.createCellStyle();
 				style.setFillBackgroundColor(IndexedColors.RED.getIndex());
 				style.setFillPattern(CellStyle.ALIGN_FILL);
@@ -102,7 +93,7 @@ public class Analyzer {
 		}
 		
 		try {
-			DateFormat df = new SimpleDateFormat("MM_dd_yy");
+			DateFormat df = new SimpleDateFormat("MM_dd_yyyy");
 			String fileName = df.format(new Date());
 			FileOutputStream out = 
 					new FileOutputStream(new File(ROOT_DIRECTORY + RESULT_DIRECTORY + fileName + ".xls"));
@@ -119,7 +110,7 @@ public class Analyzer {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Analyzer analyzer = new Analyzer();
+		IBDAnalyst analyzer = new IBDAnalyst();
 		analyzer.printOutResult(analyzer.analyze());
 	}
 

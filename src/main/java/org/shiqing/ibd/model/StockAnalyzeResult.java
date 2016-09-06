@@ -12,18 +12,18 @@ import com.google.common.collect.Lists;
 public class StockAnalyzeResult {
 	private String symbol;
 	private String name;
-	private Integer occurance;
+	private Integer occurrence;
 	private List<String> involvedSpreadsheets;
 	
 	public StockAnalyzeResult() {
 		involvedSpreadsheets = Lists.newArrayList();
 	}
 	
-	public StockAnalyzeResult(String symbol, String name, Integer occurance, List<String> involvedSpreadsheets) {
+	public StockAnalyzeResult(String symbol, String name, Integer occurrence, List<String> involvedSpreadsheets) {
 		super();
 		this.symbol = symbol;
 		this.name = name;
-		this.occurance = occurance;
+		this.occurrence = occurrence;
 		this.involvedSpreadsheets = involvedSpreadsheets;
 	}
 
@@ -39,11 +39,11 @@ public class StockAnalyzeResult {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getOccurance() {
-		return occurance;
+	public Integer getOccurrence() {
+		return occurrence;
 	}
-	public void setOccurance(Integer occurance) {
-		this.occurance = occurance;
+	public void setOccurrence(Integer occurrence) {
+		this.occurrence = occurrence;
 	}
 	public List<String> getInvolvedSpreadsheets() {
 		return involvedSpreadsheets;
