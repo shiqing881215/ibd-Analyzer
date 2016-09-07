@@ -35,8 +35,13 @@ import com.google.common.collect.Lists;
 public class IBDAnalyst {
 
 	private static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
-	private static final String RESULT_DIRECTORY = "results/";
 	private static List<String> spreadsheets = Lists.newArrayList();
+	
+	private Analyzer assistant;
+	
+	public IBDAnalyst(Analyzer assistant) {
+		this.assistant = assistant;
+	}
 	
 	public StockListAnalyzeResult analyze() {
 		List<StockList> stockLists = Lists.newArrayList();
@@ -48,9 +53,7 @@ public class IBDAnalyst {
 			stockLists.add(strategy.extract(spreadsheet));
 		}
 		
-		Analyzer analyzer = new FullAnalyzer();
-		
-		return analyzer.analyze(stockLists);
+		return assistant.analyze(stockLists);
 	}
 	
 	private void getAllSpreadsheets() {
@@ -64,54 +67,9 @@ public class IBDAnalyst {
 		}
 	}
 	
-	private void printOutResult(StockListAnalyzeResult result) {
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		HSSFSheet sheet = workbook.createSheet("Result");
-		
-		Set<String> keyset = result.getResult().keySet();
-		int rownum = 0;
-		for (String key : keyset) {
-			Row row = sheet.createRow(rownum++);
-			StockAnalyzeResult stockAnalyzeResult = result.getResult().get(key);
-			int cellnum = 0;
-			
-			Cell symbolCell = row.createCell(cellnum++);
-			Cell nameCell = row.createCell(cellnum++);
-			Cell occuranceCell = row.createCell(cellnum++);
-			Cell involvedSpreadsheetsCell = row.createCell(cellnum++);
-			
-			symbolCell.setCellValue(stockAnalyzeResult.getSymbol());
-			nameCell.setCellValue(stockAnalyzeResult.getName());
-			occuranceCell.setCellValue(stockAnalyzeResult.getOccurrence());
-			if (stockAnalyzeResult.getOccurrence() >= 3) {
-				CellStyle style = workbook.createCellStyle();
-				style.setFillBackgroundColor(IndexedColors.RED.getIndex());
-				style.setFillPattern(CellStyle.ALIGN_FILL);
-				occuranceCell.setCellStyle(style);
-			}
-			involvedSpreadsheetsCell.setCellValue(stockAnalyzeResult.getInvolvedSpreadsheets().toString());
-		}
-		
-		try {
-			DateFormat df = new SimpleDateFormat("MM_dd_yyyy");
-			String fileName = df.format(new Date());
-			FileOutputStream out = 
-					new FileOutputStream(new File(ROOT_DIRECTORY + RESULT_DIRECTORY + fileName + ".xls"));
-			workbook.write(out);
-			out.close();
-			workbook.close();
-			System.out.println("Excel written successfully..");
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public static void main(String[] args) throws IOException {
-		IBDAnalyst analyzer = new IBDAnalyst();
-		analyzer.printOutResult(analyzer.analyze());
+		IBDAnalyst analyst = new IBDAnalyst(new FullAnalyzer());
+		analyst.assistant.generateResultSpreadsheet(analyst.analyze());
 	}
 
 }
