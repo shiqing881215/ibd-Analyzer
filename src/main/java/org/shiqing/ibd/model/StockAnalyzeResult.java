@@ -1,8 +1,8 @@
 package org.shiqing.ibd.model;
 
-import java.util.List;
+import java.util.Set;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * A data representation of single stock analyze result
@@ -13,13 +13,13 @@ public class StockAnalyzeResult {
 	private String symbol;
 	private String name;
 	private Integer occurrence;
-	private List<String> involvedSpreadsheets;
+	private Set<String> involvedSpreadsheets;
 	
 	public StockAnalyzeResult() {
-		involvedSpreadsheets = Lists.newArrayList();
+		involvedSpreadsheets = Sets.newHashSet();
 	}
 	
-	public StockAnalyzeResult(String symbol, String name, Integer occurrence, List<String> involvedSpreadsheets) {
+	public StockAnalyzeResult(String symbol, String name, Integer occurrence, Set<String> involvedSpreadsheets) {
 		super();
 		this.symbol = symbol;
 		this.name = name;
@@ -45,10 +45,10 @@ public class StockAnalyzeResult {
 	public void setOccurrence(Integer occurrence) {
 		this.occurrence = occurrence;
 	}
-	public List<String> getInvolvedSpreadsheets() {
+	public Set<String> getInvolvedSpreadsheets() {
 		return involvedSpreadsheets;
 	}
-	public void setInvolvedSpreadsheets(List<String> involvedSpreadsheets) {
+	public void setInvolvedSpreadsheets(Set<String> involvedSpreadsheets) {
 		this.involvedSpreadsheets = involvedSpreadsheets;
 	}
 }
