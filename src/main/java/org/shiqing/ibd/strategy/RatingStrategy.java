@@ -52,14 +52,16 @@ public class RatingStrategy implements Strategy {
 				if (row.getCell(0).getStringCellValue().isEmpty()) {
 					break;
 				}
-				
 				Stock stock = new Stock(
 						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(0))).getStringCellValue(),  // Symbol
 						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(1))).getStringCellValue(), // companyName
 						Double.parseDouble(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(2))).getStringCellValue()), // price
-						Integer.parseInt(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(3))).getStringCellValue()), // compositeRating
-						Integer.parseInt(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(4))).getStringCellValue()), // ePSRating
-						Integer.parseInt(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(5))).getStringCellValue()), // rSRating
+						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(3))).getStringCellValue().isEmpty() ? 
+								0 : Integer.parseInt(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(3))).getStringCellValue()), // compositeRating
+						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(4))).getStringCellValue().isEmpty() ?
+								0 : Integer.parseInt(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(4))).getStringCellValue()), // ePSRating
+						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(5))).getStringCellValue().isEmpty() ?
+								0 : Integer.parseInt(row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(5))).getStringCellValue()), // rSRating
 						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(6))).getStringCellValue(), // sMRRating
 						row.getCell(ratingCategoryColumnIndex.get(RATING_CATEGORY.get(7))).getStringCellValue()); // aCC_DISRating
 				

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
+import org.shiqing.ibd.analyzer.HighOccurrenceAnalyzer;
 import org.shiqing.ibd.analyzer.IBD50PlusSectorLeaderAnalyzer;
 import org.shiqing.ibd.model.StockList;
 import org.shiqing.ibd.model.StockListAnalyzeResult;
@@ -60,6 +61,9 @@ public class IBDAnalyst {
 		analyst.assistant.generateResultSpreadsheet(analyst.analyze());
 		
 		analyst = new IBDAnalyst(new IBD50PlusSectorLeaderAnalyzer());
+		analyst.assistant.generateResultSpreadsheet(analyst.analyze());
+		
+		analyst = new IBDAnalyst(new HighOccurrenceAnalyzer());
 		analyst.assistant.generateResultSpreadsheet(analyst.analyze());
 	}
 }
