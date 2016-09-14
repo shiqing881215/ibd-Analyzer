@@ -7,8 +7,8 @@ import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.analyzer.HighOccurrenceAnalyzer;
 import org.shiqing.ibd.analyzer.IBD50PlusSectorLeaderAnalyzer;
-import org.shiqing.ibd.model.StockList;
-import org.shiqing.ibd.model.StockListAnalyzeResult;
+import org.shiqing.ibd.model.raw.StockList;
+import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
 import org.shiqing.ibd.strategy.RatingStrategy;
 import org.shiqing.ibd.strategy.Strategy;
 

@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.shiqing.ibd.model.Stock;
-import org.shiqing.ibd.model.StockList;
-import org.shiqing.ibd.model.StockListAnalyzeResult;
+import org.shiqing.ibd.model.raw.Stock;
+import org.shiqing.ibd.model.raw.StockList;
+import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
 
 /**
  * Full analyzer 

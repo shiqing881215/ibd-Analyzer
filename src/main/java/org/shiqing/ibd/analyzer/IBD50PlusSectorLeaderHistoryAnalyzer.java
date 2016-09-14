@@ -2,8 +2,8 @@ package org.shiqing.ibd.analyzer;
 
 import java.util.List;
 
-import org.shiqing.ibd.model.StockList;
-import org.shiqing.ibd.model.StockListAnalyzeResult;
+import org.shiqing.ibd.model.raw.StockList;
+import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
 
 /**
  * 

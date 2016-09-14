@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.shiqing.ibd.model.StockAnalyzeResult;
-import org.shiqing.ibd.model.StockList;
-import org.shiqing.ibd.model.StockListAnalyzeResult;
+import org.shiqing.ibd.model.raw.StockAnalyzeResult;
+import org.shiqing.ibd.model.raw.StockList;
+import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
 
 /**
  * IBD_50 + Sector_Leader analyzer 

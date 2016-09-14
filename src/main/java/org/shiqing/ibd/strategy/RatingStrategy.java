@@ -10,8 +10,9 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.shiqing.ibd.model.Stock;
-import org.shiqing.ibd.model.StockList;
+import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.raw.Stock;
+import org.shiqing.ibd.model.raw.StockList;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -27,7 +28,7 @@ public class RatingStrategy implements Strategy {
 			"Symbol", "Company Name", "Price", "Composite Rating", "EPS Rating", "RS Rating", "SMR Rating", "ACC/DIS Rating");
 	private Map<String, Integer> ratingCategoryColumnIndex = Maps.newHashMap();
 	
-	public StockList extract(String filePath) {
+	public Spreadsheet extract(String filePath) {
 		StockList stockList = new StockList();
 		
 		try {
