@@ -11,8 +11,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.shiqing.ibd.model.Spreadsheet;
-import org.shiqing.ibd.model.raw.Stock;
-import org.shiqing.ibd.model.raw.StockList;
+import org.shiqing.ibd.model.input.Stock;
+import org.shiqing.ibd.model.input.StockList;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

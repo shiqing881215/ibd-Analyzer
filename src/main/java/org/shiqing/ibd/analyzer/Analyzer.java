@@ -2,8 +2,9 @@ package org.shiqing.ibd.analyzer;
 
 import java.util.List;
 
-import org.shiqing.ibd.model.raw.StockList;
-import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
+import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.input.StockList;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 /**
  * 
@@ -22,7 +23,7 @@ public interface Analyzer {
 	 * Analyze a list of {@link StockList} and generate specific result based on the strategy.
 	 * @return A {@link StockListAnalyzeResult} that can be used to print out a single result spreadsheet.
 	 */
-	public StockListAnalyzeResult analyze(List<StockList> stockLists);
+	public StockListAnalyzeResult analyze(List<Spreadsheet> stockLists);
 	
 	/**
 	 * Generate a spreadsheet that contains the analyze result

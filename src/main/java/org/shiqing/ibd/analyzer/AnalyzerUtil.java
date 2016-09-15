@@ -12,8 +12,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
-import org.shiqing.ibd.model.raw.StockAnalyzeResult;
-import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
+import org.shiqing.ibd.model.output.StockAnalyzeResult;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 public class AnalyzerUtil {
 	

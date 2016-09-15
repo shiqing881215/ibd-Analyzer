@@ -1,7 +1,7 @@
 package org.shiqing.ibd.strategy;
 
 import org.shiqing.ibd.model.Spreadsheet;
-import org.shiqing.ibd.model.raw.StockList;
+import org.shiqing.ibd.model.input.StockList;
 
 /**
  * 

@@ -2,8 +2,8 @@ package org.shiqing.ibd.analyzer;
 
 import java.util.List;
 
-import org.shiqing.ibd.model.raw.StockList;
-import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
+import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 /**
  * 
@@ -14,18 +14,15 @@ import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
  * @author shiqing
  *
  */
-public class IBD50PlusSectorLeaderHistoryAnalyzer extends FullAnalyzer {
+public class IBD50PlusSectorLeaderHistoryAnalyzer implements Analyzer {
 
-	@Override
-	public StockListAnalyzeResult analyze(List<StockList> stockLists) {
-		// TODO Auto-generated method stub
-		return super.analyze(stockLists);
+	public StockListAnalyzeResult analyze(List<Spreadsheet> stockLists) {
+		
+		return null;
 	}
 
-	@Override
 	public void generateResultSpreadsheet(StockListAnalyzeResult result) {
 		// TODO Auto-generated method stub
-		super.generateResultSpreadsheet(result);
 	}
 
 }

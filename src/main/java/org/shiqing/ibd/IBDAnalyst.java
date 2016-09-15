@@ -7,8 +7,8 @@ import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.analyzer.HighOccurrenceAnalyzer;
 import org.shiqing.ibd.analyzer.IBD50PlusSectorLeaderAnalyzer;
-import org.shiqing.ibd.model.raw.StockList;
-import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
+import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 import org.shiqing.ibd.strategy.RatingStrategy;
 import org.shiqing.ibd.strategy.Strategy;
 
@@ -29,7 +29,7 @@ public class IBDAnalyst {
 	}
 	
 	public StockListAnalyzeResult analyze() {
-		List<StockList> stockLists = Lists.newArrayList();
+		List<Spreadsheet> stockLists = Lists.newArrayList();
 		
 		// Extract and formalize the necessary data
 		for (String spreadsheet : AnalystUtil.getAllSpreadsheets()) {

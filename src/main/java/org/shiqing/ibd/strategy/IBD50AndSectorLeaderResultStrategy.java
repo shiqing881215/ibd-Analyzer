@@ -9,8 +9,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.shiqing.ibd.model.Spreadsheet;
-import org.shiqing.ibd.model.raw.StockAnalyzeResult;
-import org.shiqing.ibd.model.result.ResultStockList;
+import org.shiqing.ibd.model.input.IBD50PlusSectorLeaderStockList;
+import org.shiqing.ibd.model.output.StockAnalyzeResult;
 
 import com.google.common.collect.Sets;
 
@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
 public class IBD50AndSectorLeaderResultStrategy implements Strategy {
 
 	public Spreadsheet extract(String filePath) {
-		ResultStockList spreadsheet = new ResultStockList();
+		IBD50PlusSectorLeaderStockList spreadsheet = new IBD50PlusSectorLeaderStockList();
 		
 		try {
 			FileInputStream file = new FileInputStream(filePath);

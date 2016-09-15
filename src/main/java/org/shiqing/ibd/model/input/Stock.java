@@ -1,5 +1,12 @@
-package org.shiqing.ibd.model.raw;
+package org.shiqing.ibd.model.input;
 
+/**
+ * 
+ * Data POJO represents a single stock (a row) in one original spreadsheet
+ * 
+ * @author shiqing
+ *
+ */
 public class Stock {
 	private String symbol;
 	private String companyName;

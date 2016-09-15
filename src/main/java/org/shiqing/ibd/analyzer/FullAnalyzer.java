@@ -5,9 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.shiqing.ibd.model.raw.Stock;
-import org.shiqing.ibd.model.raw.StockList;
-import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
+import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.input.Stock;
+import org.shiqing.ibd.model.input.StockList;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 /**
  * Full analyzer 
@@ -27,8 +28,10 @@ public class FullAnalyzer implements Analyzer {
 		this.result = new StockListAnalyzeResult();
 	}
 
-	public StockListAnalyzeResult analyze(List<StockList> stockLists) {
-		for (StockList stockList : stockLists) {
+	public StockListAnalyzeResult analyze(List<Spreadsheet> stockLists) {
+		for (int i = 0; i < stockLists.size(); i++) {
+			// The Spreadsheet here is actually StockList TODO Find a clearer way
+			StockList stockList = (StockList)(stockLists.get(i));
 			for (Stock stock : stockList.getStocks()) {
 				result.addStockAnalyzeResult(stock, stockList.getName());
 			}

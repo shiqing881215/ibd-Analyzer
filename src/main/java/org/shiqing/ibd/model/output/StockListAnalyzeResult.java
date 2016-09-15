@@ -1,18 +1,23 @@
-package org.shiqing.ibd.model.raw;
+package org.shiqing.ibd.model.output;
 
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.shiqing.ibd.model.input.Stock;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 /**
+ * A data pojo to represent a bunch of stock analyze result.
+ * The major purpose for this pojo is to generate the result spreadsheet.
  * 
  * @author shiqing
  *
  */
 public class StockListAnalyzeResult {
 	
+	// Key is the symbol of the stock
 	private Map<String, StockAnalyzeResult> result;
 
 	public StockListAnalyzeResult() {

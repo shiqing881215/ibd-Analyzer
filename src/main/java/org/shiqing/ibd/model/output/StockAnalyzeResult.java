@@ -1,4 +1,4 @@
-package org.shiqing.ibd.model.raw;
+package org.shiqing.ibd.model.output;
 
 import java.util.Set;
 

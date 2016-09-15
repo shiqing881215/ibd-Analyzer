@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.shiqing.ibd.model.raw.StockAnalyzeResult;
-import org.shiqing.ibd.model.raw.StockList;
-import org.shiqing.ibd.model.raw.StockListAnalyzeResult;
+import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.output.StockAnalyzeResult;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 /**
  * IBD_50 + Sector_Leader analyzer 
@@ -23,7 +23,7 @@ public class IBD50PlusSectorLeaderAnalyzer extends FullAnalyzer {
 	private static final String SECTOR_LEADERS ="SECTOR LEADERS";
 
 	@Override
-	public StockListAnalyzeResult analyze(List<StockList> stockLists) {
+	public StockListAnalyzeResult analyze(List<Spreadsheet> stockLists) {
 		StockListAnalyzeResult fullAnalyzerResult;
 		
 		// Check whether the full analyze has been called somewhere to save some time
