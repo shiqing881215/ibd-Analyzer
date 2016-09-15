@@ -6,7 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.InputSpreadsheet;
+import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
@@ -23,14 +24,14 @@ public class IBD50PlusSectorLeaderAnalyzer extends FullAnalyzer {
 	private static final String SECTOR_LEADERS ="SECTOR LEADERS";
 
 	@Override
-	public StockListAnalyzeResult analyze(List<Spreadsheet> stockLists) {
+	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
 		StockListAnalyzeResult fullAnalyzerResult;
 		
 		// Check whether the full analyze has been called somewhere to save some time
 		if (!super.result.getResult().isEmpty()) {
 			fullAnalyzerResult = super.result;
 		} else {
-			fullAnalyzerResult = super.analyze(stockLists);
+			fullAnalyzerResult = (StockListAnalyzeResult)(super.analyze(stockLists));
 		}
 		
 		StockListAnalyzeResult ibd50PlusSectorLeaderAnalyzeResult = new StockListAnalyzeResult();
@@ -46,7 +47,7 @@ public class IBD50PlusSectorLeaderAnalyzer extends FullAnalyzer {
 	}
 
 	@Override
-	public void generateResultSpreadsheet(StockListAnalyzeResult result) {
+	public void generateResultSpreadsheet(OutputSpreadsheet result) {
 		DateFormat df = new SimpleDateFormat("MM_dd_yy");
 		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + 
 				df.format(new Date()) + "_ibd50_plus_sector_leader" + ".xls";

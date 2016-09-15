@@ -2,7 +2,7 @@ package org.shiqing.ibd.model.input;
 
 import java.util.List;
 
-import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.InputSpreadsheet;
 
 import com.google.common.collect.Lists;
 
@@ -13,7 +13,7 @@ import com.google.common.collect.Lists;
  * @author shiqing
  *
  */
-public class StockList implements Spreadsheet {
+public class StockList implements InputSpreadsheet {
 	private String name;  // Spreadsheet name
 	private List<Stock> stocks;  // List of stocks in this spreadsheet
 	

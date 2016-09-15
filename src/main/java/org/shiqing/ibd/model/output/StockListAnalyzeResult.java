@@ -3,6 +3,7 @@ package org.shiqing.ibd.model.output;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.input.Stock;
 
 import com.google.common.collect.Maps;
@@ -15,7 +16,7 @@ import com.google.common.collect.Sets;
  * @author shiqing
  *
  */
-public class StockListAnalyzeResult {
+public class StockListAnalyzeResult implements OutputSpreadsheet {
 	
 	// Key is the symbol of the stock
 	private Map<String, StockAnalyzeResult> result;
@@ -30,7 +31,7 @@ public class StockListAnalyzeResult {
 	}
 	
 	/**
-	 * Add a new stock analyze result
+	 * Add a new or existing stock analyze result
 	 * @param stock
 	 */
 	public void addStockAnalyzeResult(Stock stock, String involvedSpreadsheet) {

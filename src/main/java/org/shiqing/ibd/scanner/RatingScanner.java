@@ -1,4 +1,4 @@
-package org.shiqing.ibd.strategy;
+package org.shiqing.ibd.scanner;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.InputSpreadsheet;
 import org.shiqing.ibd.model.input.Stock;
 import org.shiqing.ibd.model.input.StockList;
 
@@ -22,13 +22,13 @@ import com.google.common.collect.Maps;
  * @author shiqing
  *
  */
-public class RatingStrategy implements Strategy {
+public class RatingScanner implements SpreadsheetScanner {
 
 	private static final List<String> RATING_CATEGORY = Lists.newArrayList(
 			"Symbol", "Company Name", "Price", "Composite Rating", "EPS Rating", "RS Rating", "SMR Rating", "ACC/DIS Rating");
 	private Map<String, Integer> ratingCategoryColumnIndex = Maps.newHashMap();
 	
-	public Spreadsheet extract(String filePath) {
+	public InputSpreadsheet extract(String filePath) {
 		StockList stockList = new StockList();
 		
 		try {
@@ -131,7 +131,7 @@ public class RatingStrategy implements Strategy {
 	}
 	
 	public static void main(String[] args) {
-		RatingStrategy rs = new RatingStrategy();
+		RatingScanner rs = new RatingScanner();
 		rs.extract("/Users/Rossi/Documents/IBD/SECTOR LEADERS.xls");
 	}
 }

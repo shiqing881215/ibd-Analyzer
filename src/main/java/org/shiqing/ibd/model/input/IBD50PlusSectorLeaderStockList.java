@@ -2,7 +2,7 @@ package org.shiqing.ibd.model.input;
 
 import java.util.List;
 
-import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.InputSpreadsheet;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 
 import com.google.common.collect.Lists;
@@ -14,7 +14,7 @@ import com.google.common.collect.Lists;
  * @author shiqing
  *
  */
-public class IBD50PlusSectorLeaderStockList implements Spreadsheet {
+public class IBD50PlusSectorLeaderStockList implements InputSpreadsheet {
 	private String name;   // The result spreadsheet name
 	private List<StockAnalyzeResult> stocks;  // The stock listed in this result spreadsheet
 	

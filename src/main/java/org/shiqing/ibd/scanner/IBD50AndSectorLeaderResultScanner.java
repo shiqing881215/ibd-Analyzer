@@ -1,4 +1,4 @@
-package org.shiqing.ibd.strategy;
+package org.shiqing.ibd.scanner;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.InputSpreadsheet;
 import org.shiqing.ibd.model.input.IBD50PlusSectorLeaderStockList;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 
@@ -20,9 +20,9 @@ import com.google.common.collect.Sets;
  * @author shiqing
  *
  */
-public class IBD50AndSectorLeaderResultStrategy implements Strategy {
+public class IBD50AndSectorLeaderResultScanner implements SpreadsheetScanner {
 
-	public Spreadsheet extract(String filePath) {
+	public InputSpreadsheet extract(String filePath) {
 		IBD50PlusSectorLeaderStockList spreadsheet = new IBD50PlusSectorLeaderStockList();
 		
 		try {
@@ -37,8 +37,9 @@ public class IBD50AndSectorLeaderResultStrategy implements Strategy {
 			// Get all the rows of the current sheet
 			Iterator<Row> rowIterator = sheet.iterator();
 			
-			// Set spreadsheet name
-			spreadsheet.setName(filePath.substring(filePath.lastIndexOf("/")+1));
+			// Set spreadsheet name, sample spreadsheet name : 09_10_16_ibd50_plus_sector_leader.xls
+			// we only want 09/10/16
+			spreadsheet.setName(filePath.substring(filePath.lastIndexOf("/")+1, filePath.lastIndexOf("/")+9).replace("_", "/"));
 			
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
@@ -87,7 +88,7 @@ public class IBD50AndSectorLeaderResultStrategy implements Strategy {
 	}
 	
 	public static void main(String[] args) {
-		IBD50AndSectorLeaderResultStrategy i = new IBD50AndSectorLeaderResultStrategy();
+		IBD50AndSectorLeaderResultScanner i = new IBD50AndSectorLeaderResultScanner();
 		i.extract("/Users/Rossi/Documents/IBD/results/09_10_16_ibd50_plus_sector_leader.xls");
 	}
 }

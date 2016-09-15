@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.shiqing.ibd.model.Spreadsheet;
+import org.shiqing.ibd.model.InputSpreadsheet;
+import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.input.Stock;
 import org.shiqing.ibd.model.input.StockList;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
@@ -28,7 +29,7 @@ public class FullAnalyzer implements Analyzer {
 		this.result = new StockListAnalyzeResult();
 	}
 
-	public StockListAnalyzeResult analyze(List<Spreadsheet> stockLists) {
+	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
 		for (int i = 0; i < stockLists.size(); i++) {
 			// The Spreadsheet here is actually StockList TODO Find a clearer way
 			StockList stockList = (StockList)(stockLists.get(i));
@@ -40,7 +41,7 @@ public class FullAnalyzer implements Analyzer {
 		return result;
 	}
 
-	public void generateResultSpreadsheet(StockListAnalyzeResult result) {
+	public void generateResultSpreadsheet(OutputSpreadsheet result) {
 		DateFormat df = new SimpleDateFormat("MM_dd_yy");
 		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + df.format(new Date()) + ".xls";
 		
