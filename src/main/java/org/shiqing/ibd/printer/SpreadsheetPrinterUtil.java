@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -21,6 +24,12 @@ import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 public class SpreadsheetPrinterUtil {
+	
+	public static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
+	public static final String RESULT_DIRECTORY = ROOT_DIRECTORY + "results/"; 
+	
+	// TODO Better way
+	private static String printDate = null;
 	
 	/**
 	 * Generate the result spreadsheet
@@ -123,5 +132,58 @@ public class SpreadsheetPrinterUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static LocalDate getNextFriday(LocalDate d) {
+		return d.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+	}
+	
+	/**
+	 * Get the print out date for all the result spreadsheet.
+	 * The logic is : 
+	 * Scan the result category and find the latest date result, which should be a Friday. (If not, it doesn't hurt)
+	 * Return the next Friday after that date.
+	 * 
+	 * e.g 
+	 * Latest date in the result is 09_09_16.xls
+	 * The output should be 09_16_16
+	 * 
+	 * @return Next Friday date in format MM_dd_yy
+	 */
+	public static String getPrintDate() {
+		if (printDate != null) {
+			return printDate;
+		}
+		
+		String latestDate = null;
+		File root = new File(RESULT_DIRECTORY);
+		File[] files = root.listFiles();
+		
+		// latestData in format as MM_dd_yy
+		for (File file : files) {
+			String fileName = file.getName();
+			if (file.isFile() && fileName.length() == 12) {
+				if (latestDate == null) {
+					latestDate = fileName.substring(0, fileName.indexOf("."));
+				} else if (latestDate.compareTo(fileName.substring(0, fileName.indexOf("."))) < 0){
+					latestDate = fileName.substring(0, fileName.indexOf("."));
+				}
+			}
+		}
+		
+		LocalDate nextFriday = getNextFriday(LocalDate.of(
+				Integer.parseInt(latestDate.substring(latestDate.lastIndexOf("_")+1)),  // year
+				Integer.parseInt(latestDate.substring(0, latestDate.indexOf("_"))),  // month 
+				Integer.parseInt(latestDate.substring(latestDate.indexOf("_")+1, latestDate.lastIndexOf("_")))));  // day
+		
+		printDate = nextFriday.getMonthValue() < 10 ? 
+				"0" + nextFriday.getMonthValue() + "_" + nextFriday.getDayOfMonth() + "_" + nextFriday.getYear() :
+				nextFriday.getMonthValue() + "_" + nextFriday.getDayOfMonth() + "_" + nextFriday.getYear();
+				
+		return printDate;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getPrintDate());
 	}
 }

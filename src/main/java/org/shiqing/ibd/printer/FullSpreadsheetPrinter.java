@@ -1,9 +1,5 @@
 package org.shiqing.ibd.printer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.shiqing.ibd.model.OutputSpreadsheet;
 
 /**
@@ -15,8 +11,8 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class FullSpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		DateFormat df = new SimpleDateFormat("MM_dd_yy");
-		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + df.format(new Date()) + ".xls";
+		String fileName = SpreadsheetPrinterUtil.RESULT_DIRECTORY 
+				+ SpreadsheetPrinterUtil.getPrintDate() + ".xls";
 		
 		SpreadsheetPrinterUtil.generateResultSpreadsheet(outputSpreadsheet, true, fileName);
 	}

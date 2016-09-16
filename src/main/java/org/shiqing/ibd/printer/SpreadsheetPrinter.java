@@ -10,9 +10,6 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
  */
 public interface SpreadsheetPrinter {
 	
-	public static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
-	public static final String RESULT_DIRECTORY = "results/"; 
-	
 	/**
 	 * Generate a spreadsheet that contains final the analyze result
 	 * @param stockListAnalyzeResult

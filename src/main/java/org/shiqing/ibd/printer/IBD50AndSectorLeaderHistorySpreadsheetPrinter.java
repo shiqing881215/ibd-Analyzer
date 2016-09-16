@@ -11,7 +11,7 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class IBD50AndSectorLeaderHistorySpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + "Golden.xls";
+		String fileName = SpreadsheetPrinterUtil.RESULT_DIRECTORY + "Golden.xls";
 		
 		SpreadsheetPrinterUtil.generateGoldenSpreadsheet(outputSpreadsheet, fileName);
 	}
