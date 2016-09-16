@@ -14,11 +14,11 @@ import com.google.common.collect.Lists;
  * @author shiqing
  *
  */
-public class IBD50PlusSectorLeaderStockList implements InputSpreadsheet {
+public class IBD50AndSectorLeaderStockList implements InputSpreadsheet {
 	private String name;   // The result spreadsheet name
 	private List<StockAnalyzeResult> stocks;  // The stock listed in this result spreadsheet
 	
-	public IBD50PlusSectorLeaderStockList() {
+	public IBD50AndSectorLeaderStockList() {
 		stocks = Lists.newArrayList();
 	}
 	

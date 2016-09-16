@@ -6,13 +6,13 @@ import java.util.List;
 import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.analyzer.HighOccurrenceAnalyzer;
-import org.shiqing.ibd.analyzer.IBD50PlusSectorLeaderAnalyzer;
-import org.shiqing.ibd.model.InputSpreadsheet;
-import org.shiqing.ibd.model.OutputSpreadsheet;
+import org.shiqing.ibd.analyzer.IBD50AndSectorLeaderAnalyzer;
+import org.shiqing.ibd.printer.FullSpreadsheetPrinter;
+import org.shiqing.ibd.printer.HighOccurrenceSpreadsheetPrinter;
+import org.shiqing.ibd.printer.IBD50AndSectorLeaderSpreadsheetPrinter;
+import org.shiqing.ibd.printer.SpreadsheetPrinter;
 import org.shiqing.ibd.scanner.RatingScanner;
 import org.shiqing.ibd.scanner.SpreadsheetScanner;
-
-import com.google.common.collect.Lists;
 
 /**
  * Basic Analyst to get the basic result which include : 
@@ -24,33 +24,24 @@ import com.google.common.collect.Lists;
  *
  */
 public class BasicAnalyst extends Analyst {
-
-	public BasicAnalyst(Analyzer assistant) {
-		super(assistant);
-	}
-
-	// TODO Optimize - reuse something here
-	@Override
-	public OutputSpreadsheet analyze() {
-		List<InputSpreadsheet> inputSpreadsheets = Lists.newArrayList();
-		
-		// Extract and formalize the necessary data
-		for (String spreadsheet : AnalystUtil.getIBDRawSpreadsheets()) {
-			SpreadsheetScanner strategy = new RatingScanner();
-			inputSpreadsheets.add(strategy.extract(spreadsheet));
-		}
-		
-		return assistant.analyze(inputSpreadsheets);
+	
+	public BasicAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer) {
+		super(scanner, analyzer, printer);
 	}
 	
+	@Override
+	protected List<String> getInputSpreadsheetPaths() {
+		return AnalystUtil.getIBDRawSpreadsheets();
+	}
+
 	public static void main(String[] args) throws IOException {
-		Analyst analyst = new BasicAnalyst(new FullAnalyzer());
-		analyst.generateResultSpreadsheet();
+		Analyst analyst = new BasicAnalyst(new RatingScanner(), new FullAnalyzer(), new FullSpreadsheetPrinter());
+		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new IBD50PlusSectorLeaderAnalyzer());
-		analyst.generateResultSpreadsheet();
+		analyst = new BasicAnalyst(new RatingScanner(), new IBD50AndSectorLeaderAnalyzer(), new IBD50AndSectorLeaderSpreadsheetPrinter());
+		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new HighOccurrenceAnalyzer());
-		analyst.generateResultSpreadsheet();
+		analyst = new BasicAnalyst(new RatingScanner(), new HighOccurrenceAnalyzer(), new HighOccurrenceSpreadsheetPrinter());
+		analyst.brainstorm();
 	}
 }

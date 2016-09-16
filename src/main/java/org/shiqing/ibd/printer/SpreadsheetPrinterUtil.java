@@ -1,4 +1,4 @@
-package org.shiqing.ibd.analyzer;
+package org.shiqing.ibd.printer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,13 +13,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
-public class AnalyzerUtil {
+public class SpreadsheetPrinterUtil {
 	
 	/**
 	 * Generate the result spreadsheet

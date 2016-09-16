@@ -1,8 +1,5 @@
 package org.shiqing.ibd.analyzer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.shiqing.ibd.model.InputSpreadsheet;
@@ -39,12 +36,5 @@ public class FullAnalyzer implements Analyzer {
 		}
 		
 		return result;
-	}
-
-	public void generateResultSpreadsheet(OutputSpreadsheet result) {
-		DateFormat df = new SimpleDateFormat("MM_dd_yy");
-		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + df.format(new Date()) + ".xls";
-		
-		AnalyzerUtil.generateResultSpreadsheet(result, true, fileName);
 	}
 }

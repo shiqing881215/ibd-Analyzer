@@ -9,7 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.shiqing.ibd.model.InputSpreadsheet;
-import org.shiqing.ibd.model.input.IBD50PlusSectorLeaderStockList;
+import org.shiqing.ibd.model.input.IBD50AndSectorLeaderStockList;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 
 import com.google.common.collect.Sets;
@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
 public class IBD50AndSectorLeaderResultScanner implements SpreadsheetScanner {
 
 	public InputSpreadsheet extract(String filePath) {
-		IBD50PlusSectorLeaderStockList spreadsheet = new IBD50PlusSectorLeaderStockList();
+		IBD50AndSectorLeaderStockList spreadsheet = new IBD50AndSectorLeaderStockList();
 		
 		try {
 			FileInputStream file = new FileInputStream(filePath);

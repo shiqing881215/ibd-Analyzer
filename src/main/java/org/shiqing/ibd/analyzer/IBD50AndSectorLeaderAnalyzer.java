@@ -1,8 +1,5 @@
 package org.shiqing.ibd.analyzer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -18,7 +15,7 @@ import org.shiqing.ibd.model.output.StockListAnalyzeResult;
  * @author shiqing
  *
  */
-public class IBD50PlusSectorLeaderAnalyzer extends FullAnalyzer {
+public class IBD50AndSectorLeaderAnalyzer extends FullAnalyzer {
 	
 	private static final String IBD_50 ="IBD 50";
 	private static final String SECTOR_LEADERS ="SECTOR LEADERS";
@@ -44,14 +41,5 @@ public class IBD50PlusSectorLeaderAnalyzer extends FullAnalyzer {
 		}
 		
 		return ibd50PlusSectorLeaderAnalyzeResult;
-	}
-
-	@Override
-	public void generateResultSpreadsheet(OutputSpreadsheet result) {
-		DateFormat df = new SimpleDateFormat("MM_dd_yy");
-		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + 
-				df.format(new Date()) + "_ibd50_plus_sector_leader" + ".xls";
-		
-		AnalyzerUtil.generateResultSpreadsheet(result, false, fileName);
 	}
 }

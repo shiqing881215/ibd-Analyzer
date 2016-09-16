@@ -1,8 +1,5 @@
 package org.shiqing.ibd.analyzer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -48,15 +45,4 @@ public class HighOccurrenceAnalyzer extends FullAnalyzer {
 		
 		return highOccurrenceAnalyzeResult;
 	}
-
-	@Override
-	public void generateResultSpreadsheet(OutputSpreadsheet result) {
-		DateFormat df = new SimpleDateFormat("MM_dd_yy");
-		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + 
-				df.format(new Date()) + "_high_occurence" + ".xls";
-		
-		AnalyzerUtil.generateResultSpreadsheet(result, false, fileName);
-	}
-	
-	
 }

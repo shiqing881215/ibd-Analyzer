@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.shiqing.ibd.model.InputSpreadsheet;
 import org.shiqing.ibd.model.OutputSpreadsheet;
-import org.shiqing.ibd.model.input.IBD50PlusSectorLeaderStockList;
+import org.shiqing.ibd.model.input.IBD50AndSectorLeaderStockList;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 
@@ -17,11 +17,11 @@ import org.shiqing.ibd.model.output.StockAnalyzeResult;
  * @author shiqing
  *
  */
-public class IBD50PlusSectorLeaderHistoryAnalyzer implements Analyzer {
+public class IBD50AndSectorLeaderHistoryAnalyzer implements Analyzer {
 	
 	private IBD50AndSectorLeaderStockListAnalyzeResult result;
 
-	public IBD50PlusSectorLeaderHistoryAnalyzer() {
+	public IBD50AndSectorLeaderHistoryAnalyzer() {
 		super();
 		result = new IBD50AndSectorLeaderStockListAnalyzeResult();
 	}
@@ -29,7 +29,7 @@ public class IBD50PlusSectorLeaderHistoryAnalyzer implements Analyzer {
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
 		for (int i = 0; i < stockLists.size(); i++) {
 			// The Spreadsheet here is actually StockList TODO Find a clearer way
-			IBD50PlusSectorLeaderStockList stockList = (IBD50PlusSectorLeaderStockList)(stockLists.get(i));
+			IBD50AndSectorLeaderStockList stockList = (IBD50AndSectorLeaderStockList)(stockLists.get(i));
 			for (StockAnalyzeResult stock : stockList.getStocks()) {
 				result.addStockAnalyzeResult(stock, stockList.getName());
 			}
@@ -37,11 +37,4 @@ public class IBD50PlusSectorLeaderHistoryAnalyzer implements Analyzer {
 		
 		return result;
 	}
-
-	public void generateResultSpreadsheet(OutputSpreadsheet result) {
-		String fileName = ROOT_DIRECTORY + RESULT_DIRECTORY + "Golden.xls";
-		
-		AnalyzerUtil.generateGoldenSpreadsheet(result, fileName);
-	}
-
 }
