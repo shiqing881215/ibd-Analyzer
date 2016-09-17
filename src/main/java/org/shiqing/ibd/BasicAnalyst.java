@@ -7,6 +7,9 @@ import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.analyzer.HighOccurrenceAnalyzer;
 import org.shiqing.ibd.analyzer.IBD50AndSectorLeaderAnalyzer;
+import org.shiqing.ibd.filter.DefaultFilter;
+import org.shiqing.ibd.filter.Filter;
+import org.shiqing.ibd.filter.WeeklyFilter;
 import org.shiqing.ibd.printer.FullSpreadsheetPrinter;
 import org.shiqing.ibd.printer.HighOccurrenceSpreadsheetPrinter;
 import org.shiqing.ibd.printer.IBD50AndSectorLeaderSpreadsheetPrinter;
@@ -25,8 +28,8 @@ import org.shiqing.ibd.scanner.SpreadsheetScanner;
  */
 public class BasicAnalyst extends Analyst {
 	
-	public BasicAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer) {
-		super(scanner, analyzer, printer);
+	public BasicAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer, Filter filter) {
+		super(scanner, analyzer, printer, filter);
 	}
 	
 	@Override
@@ -35,13 +38,14 @@ public class BasicAnalyst extends Analyst {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Analyst analyst = new BasicAnalyst(new RatingScanner(), new FullAnalyzer(), new FullSpreadsheetPrinter());
+		// TODO Reuse the ratingScanner and defaultFilter
+		Analyst analyst = new BasicAnalyst(new RatingScanner(), new FullAnalyzer(), new FullSpreadsheetPrinter(), new DefaultFilter());
 		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new RatingScanner(), new IBD50AndSectorLeaderAnalyzer(), new IBD50AndSectorLeaderSpreadsheetPrinter());
+		analyst = new BasicAnalyst(new RatingScanner(), new IBD50AndSectorLeaderAnalyzer(), new IBD50AndSectorLeaderSpreadsheetPrinter(), new WeeklyFilter());
 		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new RatingScanner(), new HighOccurrenceAnalyzer(), new HighOccurrenceSpreadsheetPrinter());
+		analyst = new BasicAnalyst(new RatingScanner(), new HighOccurrenceAnalyzer(), new HighOccurrenceSpreadsheetPrinter(), new DefaultFilter());
 		analyst.brainstorm();
 	}
 }

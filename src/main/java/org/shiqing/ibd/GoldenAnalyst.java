@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.IBD50AndSectorLeaderHistoryAnalyzer;
+import org.shiqing.ibd.filter.DefaultFilter;
+import org.shiqing.ibd.filter.Filter;
 import org.shiqing.ibd.printer.IBD50AndSectorLeaderHistorySpreadsheetPrinter;
 import org.shiqing.ibd.printer.SpreadsheetPrinter;
 import org.shiqing.ibd.scanner.IBD50AndSectorLeaderResultScanner;
@@ -20,8 +22,8 @@ import org.shiqing.ibd.scanner.SpreadsheetScanner;
  */
 public class GoldenAnalyst extends Analyst {
 	
-	public GoldenAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer) {
-		super(scanner, analyzer, printer);
+	public GoldenAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer, Filter filter) {
+		super(scanner, analyzer, printer, filter);
 	}
 
 	@Override
@@ -31,7 +33,7 @@ public class GoldenAnalyst extends Analyst {
 	
 	public static void main(String[] args) {
 		Analyst analyst = new GoldenAnalyst(new IBD50AndSectorLeaderResultScanner(), 
-				new IBD50AndSectorLeaderHistoryAnalyzer(), new IBD50AndSectorLeaderHistorySpreadsheetPrinter());
+				new IBD50AndSectorLeaderHistoryAnalyzer(), new IBD50AndSectorLeaderHistorySpreadsheetPrinter(), new DefaultFilter());
 		analyst.brainstorm();
 	}
 }
