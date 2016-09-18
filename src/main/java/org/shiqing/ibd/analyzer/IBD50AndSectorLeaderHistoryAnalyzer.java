@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.shiqing.ibd.model.InputSpreadsheet;
 import org.shiqing.ibd.model.OutputSpreadsheet;
+import org.shiqing.ibd.model.TimePeriod;
 import org.shiqing.ibd.model.input.IBD50AndSectorLeaderStockList;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
@@ -23,7 +24,8 @@ public class IBD50AndSectorLeaderHistoryAnalyzer implements Analyzer {
 
 	public IBD50AndSectorLeaderHistoryAnalyzer() {
 		super();
-		result = new IBD50AndSectorLeaderStockListAnalyzeResult();
+		// TODO Make it configurable Update this later
+		result = new IBD50AndSectorLeaderStockListAnalyzeResult(TimePeriod.ONE_MONTH);
 	}
 
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {

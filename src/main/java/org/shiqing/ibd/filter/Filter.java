@@ -3,7 +3,7 @@ package org.shiqing.ibd.filter;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 
 /**
- * Interface providing the hook to apply additional filtering hook on analyze result.
+ * Interface providing the hook to apply additional filtering on analyze result.
  * 
  * @author shiqing
  *

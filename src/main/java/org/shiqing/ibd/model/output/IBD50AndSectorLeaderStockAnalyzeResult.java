@@ -19,6 +19,7 @@ public class IBD50AndSectorLeaderStockAnalyzeResult {
 	private int occurrence;
 	private Set<String> involvedDates;
 	// TODO Add an indicator for continuity later
+	private double quotePerformance;
 	
 	public IBD50AndSectorLeaderStockAnalyzeResult() {
 		involvedDates = Sets.newHashSet();
@@ -34,6 +35,16 @@ public class IBD50AndSectorLeaderStockAnalyzeResult {
 		this.name = name;
 		this.occurrence = occurrence;
 		this.involvedDates = involvedDates;
+	}
+	
+	public IBD50AndSectorLeaderStockAnalyzeResult(String symbol, String name, int occurrence, Set<String> involvedDates,
+			double quotePerformance) {
+		super();
+		this.symbol = symbol;
+		this.name = name;
+		this.occurrence = occurrence;
+		this.involvedDates = involvedDates;
+		this.quotePerformance = quotePerformance;
 	}
 
 	public String getSymbol() {
@@ -51,6 +62,10 @@ public class IBD50AndSectorLeaderStockAnalyzeResult {
 	public Set<String> getInvolvedDates() {
 		return involvedDates;
 	}
+	
+	public double getQuotePerformance() {
+		return quotePerformance;
+	}
 
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
@@ -66,5 +81,9 @@ public class IBD50AndSectorLeaderStockAnalyzeResult {
 
 	public void setInvolvedDates(Set<String> involvedDates) {
 		this.involvedDates = involvedDates;
+	}
+
+	public void setQuotePerformance(double quotePerformance) {
+		this.quotePerformance = quotePerformance;
 	}
 }

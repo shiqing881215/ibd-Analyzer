@@ -1,4 +1,4 @@
-package org.shiqing.ibd;
+package org.shiqing.ibd.analyst;
 
 /**
  * 

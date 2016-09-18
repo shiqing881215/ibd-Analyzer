@@ -1,4 +1,4 @@
-package org.shiqing.ibd;
+package org.shiqing.ibd.analyst;
 
 import java.io.File;
 import java.util.List;
@@ -30,6 +30,7 @@ public class AnalystUtil {
 	 * Get all the Ibd50SectorLeader results
 	 * @return
 	 */
+	// TODO add time period to allow compare a certain number of result for one month / three months / one year
 	public static List<String> getIBD50AndSectorLeaderResultSpreadsheets() {
 		List<String> spreadsheets = Lists.newArrayList();
 		

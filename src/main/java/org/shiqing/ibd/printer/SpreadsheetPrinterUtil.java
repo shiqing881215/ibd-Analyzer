@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -109,6 +110,7 @@ public class SpreadsheetPrinterUtil {
 			Cell nameCell = row.createCell(cellnum++);
 			Cell occuranceCell = row.createCell(cellnum++);
 			Cell involvedSpreadsheetsCell = row.createCell(cellnum++);
+			Cell quotePerformanceCell = row.createCell(cellnum++);
 			
 			symbolCell.setCellValue(stockAnalyzeResult.getSymbol());
 			nameCell.setCellValue(stockAnalyzeResult.getName());
@@ -117,6 +119,7 @@ public class SpreadsheetPrinterUtil {
 			Object[] sortedDates = stockAnalyzeResult.getInvolvedDates().toArray();
 			Arrays.sort(sortedDates);
 			involvedSpreadsheetsCell.setCellValue(Arrays.toString(sortedDates));
+			quotePerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getQuotePerformance()));
 		}
 		
 		try {

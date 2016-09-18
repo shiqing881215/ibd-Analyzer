@@ -44,6 +44,7 @@ public class WeeklyFilter implements Filter {
 	 * Go through each row and if the symbol not showing in the weekly review, remove the line
 	 */
 	public OutputSpreadsheet filtrate(OutputSpreadsheet outputSpreadsheet) {
+		// TODO Better way to config this hardcode cast
 		StockListAnalyzeResult result = (StockListAnalyzeResult)outputSpreadsheet;
 		Set<String> filteringCriteria = getFilteringCriteria();
 		
