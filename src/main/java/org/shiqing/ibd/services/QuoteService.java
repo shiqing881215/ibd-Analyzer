@@ -19,19 +19,7 @@ import yahoofinance.histquotes.Interval;
  */
 public class QuoteService {
 	
-	private static QuoteService  quoteService;
-	
-	private QuoteService() {
-		
-	}
-	
-	public static QuoteService getService() {
-		if (quoteService == null) {
-			quoteService = new QuoteService();
-		}
-		return quoteService;
-	}
-	
+	// TODO Some issue with this method
 	public double getQuote(String symbol, int year, int month, int day) {
 		Calendar from = Calendar.getInstance();
 		Calendar to = Calendar.getInstance();
@@ -41,7 +29,11 @@ public class QuoteService {
 		Stock stock = YahooFinance.get(symbol, true);
 		List<HistoricalQuote> histQuotes = stock.getHistory(from, to, Interval.DAILY);
 		
-		return histQuotes.get(0).getClose().doubleValue();
+		if (histQuotes.isEmpty()) {
+			return Double.NaN;
+		} else {
+			return histQuotes.get(0).getClose().doubleValue();
+		}
 	}
 	
 	public Pair<Double, Double> getHistoryQuotes(String symbol, TimePeriod timePeriod) {
@@ -92,6 +84,7 @@ public class QuoteService {
 		stock.print();
 		System.out.println(googleHistQuotes.get(0).getClose());  */
 		
-		System.out.println(QuoteService.getService().getHistoryQuotes("CRM", TimePeriod.ONE_MONTH));
+//		System.out.println(QuoteService.getService().getHistoryQuotes("CRM", TimePeriod.ONE_MONTH));
+//		System.out.println(QuoteService.getService().getQuote("FB", 16, 9, 20));
 	}
 }

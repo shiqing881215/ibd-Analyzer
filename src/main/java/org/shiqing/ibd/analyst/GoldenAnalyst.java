@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.IBD50AndSectorLeaderHistoryAnalyzer;
+import org.shiqing.ibd.enrich.ContinuityEnricher;
 import org.shiqing.ibd.enrich.Enricher;
 import org.shiqing.ibd.enrich.QuotePerformanceEnricher;
 import org.shiqing.ibd.filter.DefaultFilter;
@@ -38,9 +39,12 @@ public class GoldenAnalyst extends Analyst {
 	public static void main(String[] args) {
 		Filter defaultFilter = new DefaultFilter();
 		Enricher performanceEnricher = new QuotePerformanceEnricher();
+		Enricher continuityEnricher = new ContinuityEnricher();
 		
 		Analyst analyst = new GoldenAnalyst(new IBD50AndSectorLeaderResultScanner(), 
-				new IBD50AndSectorLeaderHistoryAnalyzer(), Lists.newArrayList(defaultFilter), Lists.newArrayList(performanceEnricher), 
+				new IBD50AndSectorLeaderHistoryAnalyzer(), 
+				Lists.newArrayList(defaultFilter), 
+				Lists.newArrayList(performanceEnricher, continuityEnricher), 
 				new IBD50AndSectorLeaderHistorySpreadsheetPrinter());
 		analyst.brainstorm();
 	}

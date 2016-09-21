@@ -1,15 +1,17 @@
 package org.shiqing.ibd.enrich;
 
-import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.shiqing.ibd.config.AppConfig;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.TimePeriod;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.services.QuoteService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * Add quote performance for each stock.
@@ -21,6 +23,13 @@ import org.shiqing.ibd.services.QuoteService;
  *
  */
 public class QuotePerformanceEnricher implements Enricher {
+	
+	private QuoteService quoteService;
+	
+	public QuotePerformanceEnricher() {
+		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+		quoteService = (QuoteService) context.getBean("quoteService");
+	}
 
 	/**
 	 * Set performance quote for each stock
@@ -46,7 +55,7 @@ public class QuotePerformanceEnricher implements Enricher {
 	}
 
 	private double getQuotePerformance(String symbol, TimePeriod timePeriod) {
-		Pair<Double, Double> quotes = QuoteService.getService().getHistoryQuotes(symbol, timePeriod);
+		Pair<Double, Double> quotes = quoteService.getHistoryQuotes(symbol, timePeriod);
 		log(symbol, quotes, timePeriod);
 		
 		return (quotes.getLeft() - quotes.getRight()) / quotes.getRight();
@@ -62,7 +71,7 @@ public class QuotePerformanceEnricher implements Enricher {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println((41.48-38.099998)/38.099998);
-		System.out.println(MessageFormat.format("{0,number,#.##%}", (41.48-38.099998)/38.099998));
+		QuotePerformanceEnricher q = new QuotePerformanceEnricher();
+		System.out.println(q.getQuotePerformance("CRM", TimePeriod.ONE_MONTH));
 	}
 }

@@ -1,0 +1,14 @@
+<!-- Right now config through JavaConfig, you can always switch back to this xml configuration -->
+<!-- http://www.mkyong.com/spring3/spring-3-javaconfig-example/ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 
+	<bean id="quoteService" class="org.shiqing.ibd.services.QuoteService">
+	</bean>
+	-->
+
+</beans>

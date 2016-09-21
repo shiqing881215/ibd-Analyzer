@@ -130,6 +130,7 @@ public class SpreadsheetPrinterUtil {
 			Cell nameCell = row.createCell(cellnum++);
 			Cell occuranceCell = row.createCell(cellnum++);
 			Cell involvedSpreadsheetsCell = row.createCell(cellnum++);
+			Cell continuityCell = row.createCell(cellnum++);
 			Cell oneWeekPerformanceCell = row.createCell(cellnum++);
 			Cell oneMonthPerformanceCell = row.createCell(cellnum++);
 			Cell threeMonthsPerformanceCell = row.createCell(cellnum++);
@@ -142,6 +143,7 @@ public class SpreadsheetPrinterUtil {
 			Object[] sortedDates = stockAnalyzeResult.getInvolvedDates().toArray();
 			Arrays.sort(sortedDates);
 			involvedSpreadsheetsCell.setCellValue(Arrays.toString(sortedDates));
+			continuityCell.setCellValue(stockAnalyzeResult.getContinuity());
 			oneWeekPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getOneWeekPerformance()));
 			oneMonthPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getOneMonthPerformance()));
 			threeMonthsPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getThreeMonthsPerformance()));
