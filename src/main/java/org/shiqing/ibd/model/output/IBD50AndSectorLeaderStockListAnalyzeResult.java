@@ -3,7 +3,6 @@ package org.shiqing.ibd.model.output;
 import java.util.Map;
 
 import org.shiqing.ibd.model.OutputSpreadsheet;
-import org.shiqing.ibd.model.TimePeriod;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -23,20 +22,14 @@ import com.google.common.collect.Sets;
  */
 public class IBD50AndSectorLeaderStockListAnalyzeResult implements OutputSpreadsheet {
 	private Map<String, IBD50AndSectorLeaderStockAnalyzeResult> result;
-	private TimePeriod timePeriod;
 	
-	public IBD50AndSectorLeaderStockListAnalyzeResult(TimePeriod timePeriod) {
+	public IBD50AndSectorLeaderStockListAnalyzeResult() {
 		super();
 		result = Maps.newHashMap();
-		this.timePeriod = timePeriod;
 	}
 
 	public Map<String, IBD50AndSectorLeaderStockAnalyzeResult> getResult() {
 		return result;
-	}
-	
-	public TimePeriod getTimePeriod() {
-		return timePeriod;
 	}
 
 	/**

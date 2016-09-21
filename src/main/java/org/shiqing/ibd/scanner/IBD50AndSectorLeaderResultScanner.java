@@ -41,6 +41,8 @@ public class IBD50AndSectorLeaderResultScanner implements SpreadsheetScanner {
 			// we only want 09/10/16
 			spreadsheet.setName(filePath.substring(filePath.lastIndexOf("/")+1, filePath.lastIndexOf("/")+9).replace("_", "/"));
 			
+			// Skip the first row which is the title
+			rowIterator.next();
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
 				

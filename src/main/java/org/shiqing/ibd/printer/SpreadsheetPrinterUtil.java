@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -23,6 +25,8 @@ import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
+
+import com.google.common.collect.Lists;
 
 public class SpreadsheetPrinterUtil {
 	
@@ -52,11 +56,19 @@ public class SpreadsheetPrinterUtil {
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("Result");
+		List<String> titles = getOutputSpreadsheetTitle(StockAnalyzeResult.class.getName());
 		
 		Set<String> keyset = stockListAnalyzeResult.getResult().keySet();
 		int rownum = 0;
+		// Print title first
+		Row row = sheet.createRow(rownum++);
+		int cellNum = 0;
+		for (String title : titles) {
+			row.createCell(cellNum++).setCellValue(title);
+		}
+		
 		for (String key : keyset) {
-			Row row = sheet.createRow(rownum++);
+			row = sheet.createRow(rownum++);
 			StockAnalyzeResult stockAnalyzeResult = stockListAnalyzeResult.getResult().get(key);
 			int cellnum = 0;
 			
@@ -98,11 +110,19 @@ public class SpreadsheetPrinterUtil {
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("Result");
+		List<String> titles = getOutputSpreadsheetTitle(IBD50AndSectorLeaderStockAnalyzeResult.class.getName());
 		
 		Set<String> keyset = stockListAnalyzeResult.getResult().keySet();
 		int rownum = 0;
+		// Print title first
+		Row row = sheet.createRow(rownum++);
+		int cellNum = 0;
+		for (String title : titles) {
+			row.createCell(cellNum++).setCellValue(title);
+		}
+		
 		for (String key : keyset) {
-			Row row = sheet.createRow(rownum++);
+			row = sheet.createRow(rownum++);
 			IBD50AndSectorLeaderStockAnalyzeResult stockAnalyzeResult = stockListAnalyzeResult.getResult().get(key);
 			int cellnum = 0;
 			
@@ -110,7 +130,10 @@ public class SpreadsheetPrinterUtil {
 			Cell nameCell = row.createCell(cellnum++);
 			Cell occuranceCell = row.createCell(cellnum++);
 			Cell involvedSpreadsheetsCell = row.createCell(cellnum++);
-			Cell quotePerformanceCell = row.createCell(cellnum++);
+			Cell oneWeekPerformanceCell = row.createCell(cellnum++);
+			Cell oneMonthPerformanceCell = row.createCell(cellnum++);
+			Cell threeMonthsPerformanceCell = row.createCell(cellnum++);
+			Cell sixMonthsPerformanceCell = row.createCell(cellnum++);
 			
 			symbolCell.setCellValue(stockAnalyzeResult.getSymbol());
 			nameCell.setCellValue(stockAnalyzeResult.getName());
@@ -119,7 +142,10 @@ public class SpreadsheetPrinterUtil {
 			Object[] sortedDates = stockAnalyzeResult.getInvolvedDates().toArray();
 			Arrays.sort(sortedDates);
 			involvedSpreadsheetsCell.setCellValue(Arrays.toString(sortedDates));
-			quotePerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getQuotePerformance()));
+			oneWeekPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getOneWeekPerformance()));
+			oneMonthPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getOneMonthPerformance()));
+			threeMonthsPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getThreeMonthsPerformance()));
+			sixMonthsPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getSixMonthsPerformance()));
 		}
 		
 		try {
@@ -186,7 +212,32 @@ public class SpreadsheetPrinterUtil {
 		return printDate;
 	}
 	
+	private static List<String> getOutputSpreadsheetTitle(String className) {
+		List<String> titles = Lists.newArrayList();
+		try {
+			for (Field field : Class.forName(className).getDeclaredFields()) {
+				titles.add(field.toString().substring(field.toString().lastIndexOf(".")+1));
+			}
+		} catch (Exception e) {
+			// log
+			return titles;
+		}
+		return titles;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(getPrintDate());
+//		try{
+//            Class c = Class.forName(StockAnalyzeResult.class.getName());//("org.shiqing.ibd.model.output.StockAnalyzeResult");
+//            System.out.println("Class Name :"+c.getName()+"\n");
+//            Field allFieldArray[] = c.getDeclaredFields();
+//             
+//            int size = allFieldArray.length;
+//            for(int i = 0 ; i < size ; i++)
+//             {
+//                System.out.println("Field ( "+i+" ) :"+allFieldArray[i]); 
+//             }  
+//        }catch (Exception e) {
+//           e.printStackTrace();
+//        }
 	}
 }

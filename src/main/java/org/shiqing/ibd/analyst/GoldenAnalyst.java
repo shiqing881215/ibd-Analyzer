@@ -13,6 +13,8 @@ import org.shiqing.ibd.printer.SpreadsheetPrinter;
 import org.shiqing.ibd.scanner.IBD50AndSectorLeaderResultScanner;
 import org.shiqing.ibd.scanner.SpreadsheetScanner;
 
+import com.google.common.collect.Lists;
+
 /**
  * 
  * Golden analyst analyze based on the ibd50_plus_sector_leader result.
@@ -24,8 +26,8 @@ import org.shiqing.ibd.scanner.SpreadsheetScanner;
  */
 public class GoldenAnalyst extends Analyst {
 	
-	public GoldenAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer, Filter filter, Enricher enricher) {
-		super(scanner, analyzer, printer, filter, enricher);
+	public GoldenAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, List<Filter> filters, List<Enricher> enrichers, SpreadsheetPrinter printer) {
+		super(scanner, analyzer, filters, enrichers, printer);
 	}
 
 	@Override
@@ -34,8 +36,12 @@ public class GoldenAnalyst extends Analyst {
 	}
 	
 	public static void main(String[] args) {
+		Filter defaultFilter = new DefaultFilter();
+		Enricher performanceEnricher = new QuotePerformanceEnricher();
+		
 		Analyst analyst = new GoldenAnalyst(new IBD50AndSectorLeaderResultScanner(), 
-				new IBD50AndSectorLeaderHistoryAnalyzer(), new IBD50AndSectorLeaderHistorySpreadsheetPrinter(), new DefaultFilter(), new QuotePerformanceEnricher());
+				new IBD50AndSectorLeaderHistoryAnalyzer(), Lists.newArrayList(defaultFilter), Lists.newArrayList(performanceEnricher), 
+				new IBD50AndSectorLeaderHistorySpreadsheetPrinter());
 		analyst.brainstorm();
 	}
 }

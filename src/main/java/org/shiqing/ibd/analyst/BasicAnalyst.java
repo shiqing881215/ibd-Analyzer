@@ -19,6 +19,8 @@ import org.shiqing.ibd.printer.SpreadsheetPrinter;
 import org.shiqing.ibd.scanner.RatingScanner;
 import org.shiqing.ibd.scanner.SpreadsheetScanner;
 
+import com.google.common.collect.Lists;
+
 /**
  * Basic Analyst to get the basic result which include : 
  * - full results
@@ -30,8 +32,8 @@ import org.shiqing.ibd.scanner.SpreadsheetScanner;
  */
 public class BasicAnalyst extends Analyst {
 	
-	public BasicAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer, Filter filter, Enricher enricher) {
-		super(scanner, analyzer, printer, filter, enricher);
+	public BasicAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, List<Filter> filters, List<Enricher> enrichers, SpreadsheetPrinter printer) {
+		super(scanner, analyzer, filters, enrichers, printer);
 	}
 	
 	@Override
@@ -41,13 +43,17 @@ public class BasicAnalyst extends Analyst {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Reuse the ratingScanner and defaultFilter
-		Analyst analyst = new BasicAnalyst(new RatingScanner(), new FullAnalyzer(), new FullSpreadsheetPrinter(), new DefaultFilter(), new DefaultEnricher());
+		Filter defaultFilter = new DefaultFilter();
+		Filter weeklyFilter = new WeeklyFilter();
+		Enricher defaultEnricher = new DefaultEnricher();
+		
+		Analyst analyst = new BasicAnalyst(new RatingScanner(), new FullAnalyzer(), Lists.newArrayList(defaultFilter), Lists.newArrayList(defaultEnricher), new FullSpreadsheetPrinter());
 		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new RatingScanner(), new IBD50AndSectorLeaderAnalyzer(), new IBD50AndSectorLeaderSpreadsheetPrinter(), new WeeklyFilter(), new DefaultEnricher());
+		analyst = new BasicAnalyst(new RatingScanner(), new IBD50AndSectorLeaderAnalyzer(), Lists.newArrayList(weeklyFilter), Lists.newArrayList(defaultEnricher), new IBD50AndSectorLeaderSpreadsheetPrinter());
 		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new RatingScanner(), new HighOccurrenceAnalyzer(), new HighOccurrenceSpreadsheetPrinter(), new DefaultFilter(), new DefaultEnricher());
+		analyst = new BasicAnalyst(new RatingScanner(), new HighOccurrenceAnalyzer(), Lists.newArrayList(defaultFilter), Lists.newArrayList(defaultEnricher), new HighOccurrenceSpreadsheetPrinter());
 		analyst.brainstorm();
 	}
 }

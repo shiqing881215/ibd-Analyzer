@@ -24,17 +24,17 @@ public abstract class Analyst implements IAnalyst {
 	
 	protected SpreadsheetScanner scanner;
 	protected Analyzer analyzer;
+	protected List<Filter> filters;
+	protected List<Enricher> enrichers;
 	protected SpreadsheetPrinter printer;
-	protected Filter filter;
-	protected Enricher enricher;
 	
-	public Analyst(SpreadsheetScanner scanner, Analyzer analyzer, SpreadsheetPrinter printer, Filter filter, Enricher enricher) {
+	public Analyst(SpreadsheetScanner scanner, Analyzer analyzer,  List<Filter> filters, List<Enricher> enrichers, SpreadsheetPrinter printer) {
 		super();
 		this.scanner = scanner;
 		this.analyzer = analyzer;
+		this.filters = filters;
+		this.enrichers = enrichers;
 		this.printer = printer;
-		this.filter = filter;
-		this.enricher = enricher;
 	}
 	
 	protected List<InputSpreadsheet> extract(List<String> filePaths) {
@@ -50,11 +50,19 @@ public abstract class Analyst implements IAnalyst {
 	}
 	
 	protected OutputSpreadsheet filtrate(OutputSpreadsheet outputSpreadsheet) {
-		return filter.filtrate(outputSpreadsheet);
+		OutputSpreadsheet output = outputSpreadsheet;
+		for (Filter filter : filters) {
+			output = filter.filtrate(output);
+		}
+		return output;
 	}
 	
 	protected OutputSpreadsheet enrich(OutputSpreadsheet outputSpreadsheet) {
-		return enricher.enrich(outputSpreadsheet);
+		OutputSpreadsheet output = outputSpreadsheet;
+		for (Enricher enricher : enrichers) {
+			output = enricher.enrich(output);
+		}
+		return output;
 	}
 	
 	protected void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {

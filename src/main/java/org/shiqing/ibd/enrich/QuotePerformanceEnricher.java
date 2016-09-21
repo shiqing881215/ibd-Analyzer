@@ -31,8 +31,15 @@ public class QuotePerformanceEnricher implements Enricher {
 		Iterator<Entry<String, IBD50AndSectorLeaderStockAnalyzeResult>> iterator = result.getResult().entrySet().iterator();
 		while(iterator.hasNext()) {
 			IBD50AndSectorLeaderStockAnalyzeResult singleStockResult = iterator.next().getValue();
-			double quotePerformance = getQuotePerformance(singleStockResult.getSymbol(), result.getTimePeriod());
-			singleStockResult.setQuotePerformance(quotePerformance);
+			double oneWeekPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_WEEK);
+			double oneMonthPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_MONTH);
+			double threeMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.THREE_MONTHS);
+			double sixMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.SIX_MONTHS);
+			
+			singleStockResult.setOneWeekPerformance(oneWeekPerformance);
+			singleStockResult.setOneMonthPerformance(oneMonthPerformance);
+			singleStockResult.setThreeMonthsPerformance(threeMonthsPerformance);
+			singleStockResult.setSixMonthsPerformance(sixMonthsPerformance);
 		}
 		
 		return result;
