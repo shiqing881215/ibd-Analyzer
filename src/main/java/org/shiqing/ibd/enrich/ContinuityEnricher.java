@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
@@ -22,9 +23,6 @@ import com.google.common.collect.Lists;
  */
 public class ContinuityEnricher implements Enricher {
 
-	private static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
-	private static final String RESULT_DIRECTORY = ROOT_DIRECTORY + "results/";
-	
 	public OutputSpreadsheet enrich(OutputSpreadsheet outputSpreadsheet) {
 		IBD50AndSectorLeaderStockListAnalyzeResult result = (IBD50AndSectorLeaderStockListAnalyzeResult)outputSpreadsheet;
 		
@@ -63,7 +61,7 @@ public class ContinuityEnricher implements Enricher {
 	private String[] getAllDates() {
 		List<String> allDates = Lists.newArrayList();
 		
-		File root = new File(RESULT_DIRECTORY);
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.result"));
 		File[] files = root.listFiles();
 		
 		// TODO Remove hardcode directory

@@ -4,14 +4,12 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.shiqing.ibd.config.AppConfig;
+import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.TimePeriod;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.services.QuoteService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * Add quote performance for each stock.
@@ -27,8 +25,7 @@ public class QuotePerformanceEnricher implements Enricher {
 	private QuoteService quoteService;
 	
 	public QuotePerformanceEnricher() {
-		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-		quoteService = (QuoteService) context.getBean("quoteService");
+		quoteService = (QuoteService)ConfigFactory.get().getBean("quoteService");
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package org.shiqing.ibd;
+package org.shiqing.ibd.config;
 
 import org.shiqing.ibd.config.AppConfig;
 import org.shiqing.ibd.model.TimePeriod;

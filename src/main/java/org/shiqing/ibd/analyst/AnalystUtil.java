@@ -3,23 +3,22 @@ package org.shiqing.ibd.analyst;
 import java.io.File;
 import java.util.List;
 
+import org.shiqing.ibd.config.ConfigFactory;
+
 import com.google.common.collect.Lists;
 
 public class AnalystUtil {
 	
-	private static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
-	private static final String RESULT_DIRECTORY = ROOT_DIRECTORY + "results/";
-	
 	public static List<String> getIBDRawSpreadsheets() {
 		List<String> spreadsheets = Lists.newArrayList();
 		
-		File root = new File(ROOT_DIRECTORY);
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root"));
 		File[] files = root.listFiles();
 		
 		// TODO Remove hardcode directory
 		for (File file : files) {
 			if (file.isFile() && !file.getName().equals("result.xls") && file.getName().endsWith(".xls")) {
-				spreadsheets.add(ROOT_DIRECTORY + file.getName());
+				spreadsheets.add((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName());
 			}
 		}
 		
@@ -34,13 +33,13 @@ public class AnalystUtil {
 	public static List<String> getIBD50AndSectorLeaderResultSpreadsheets() {
 		List<String> spreadsheets = Lists.newArrayList();
 		
-		File root = new File(RESULT_DIRECTORY);
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.result"));
 		File[] files = root.listFiles();
 		
 		// TODO Remove hardcode directory
 		for (File file : files) {
 			if (file.isFile() && file.getName().contains("ibd50_plus_sector_leader")) {
-				spreadsheets.add(RESULT_DIRECTORY + file.getName());
+				spreadsheets.add((String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + file.getName());
 			}
 		}
 		

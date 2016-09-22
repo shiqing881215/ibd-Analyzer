@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
@@ -33,13 +34,11 @@ import com.google.common.collect.Sets;
  *       
  *  Also, ideally as mentioned above. If finally we can make this program running daily, this is not necessary any more.
  * 
- * @author Rossi
+ * @author shiqing
  *
  */
 public class WeeklyFilter implements Filter {
 	
-	private static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
-
 	/**
 	 * Go through each row and if the symbol not showing in the weekly review, remove the line
 	 */
@@ -63,13 +62,13 @@ public class WeeklyFilter implements Filter {
 	}
 
 	private String getFilteringCriteriaFile() {
-		File root = new File(ROOT_DIRECTORY);
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root"));
 		File[] files = root.listFiles();
 		
 		// TODO Remove hardcode directory
 		for (File file : files) {
 			if (file.isFile() && file.getName().contains("WEEKLY")) {
-				return ROOT_DIRECTORY + file.getName();
+				return (String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName();
 			}
 		}
 		

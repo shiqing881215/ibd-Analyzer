@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
+import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
@@ -29,9 +30,6 @@ import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 import com.google.common.collect.Lists;
 
 public class SpreadsheetPrinterUtil {
-	
-	public static final String ROOT_DIRECTORY = "/Users/Rossi/Documents/IBD/";
-	public static final String RESULT_DIRECTORY = ROOT_DIRECTORY + "results/"; 
 	
 	// TODO Better way
 	private static String printDate = null;
@@ -187,7 +185,7 @@ public class SpreadsheetPrinterUtil {
 		}
 		
 		String latestDate = null;
-		File root = new File(RESULT_DIRECTORY);
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.result"));
 		File[] files = root.listFiles();
 		
 		// latestData in format as MM_dd_yy

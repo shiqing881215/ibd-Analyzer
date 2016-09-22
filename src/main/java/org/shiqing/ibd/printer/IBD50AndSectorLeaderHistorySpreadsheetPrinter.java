@@ -1,5 +1,6 @@
 package org.shiqing.ibd.printer;
 
+import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 
 /**
@@ -11,7 +12,7 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class IBD50AndSectorLeaderHistorySpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		String fileName = SpreadsheetPrinterUtil.RESULT_DIRECTORY + "Golden.xls";
+		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + "Golden.xls";
 		
 		SpreadsheetPrinterUtil.generateGoldenSpreadsheet(outputSpreadsheet, fileName);
 	}
