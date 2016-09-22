@@ -2,6 +2,7 @@ package org.shiqing.ibd.analyst;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.IBD50AndSectorLeaderHistoryAnalyzer;
 import org.shiqing.ibd.enrich.ContinuityEnricher;
@@ -27,6 +28,8 @@ import com.google.common.collect.Lists;
  */
 public class GoldenAnalyst extends Analyst {
 	
+	private static final Logger logger = Logger.getLogger(GoldenAnalyst.class);
+	
 	public GoldenAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, List<Filter> filters, List<Enricher> enrichers, SpreadsheetPrinter printer) {
 		super(scanner, analyzer, filters, enrichers, printer);
 	}
@@ -37,6 +40,8 @@ public class GoldenAnalyst extends Analyst {
 	}
 	
 	public static void main(String[] args) {
+		logger.info("Running GoldenAnalyst......");
+		
 		Filter defaultFilter = new DefaultFilter();
 		Enricher performanceEnricher = new QuotePerformanceEnricher();
 		Enricher continuityEnricher = new ContinuityEnricher();

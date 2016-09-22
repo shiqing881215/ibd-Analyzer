@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.log4j.Logger;
 import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.TimePeriod;
@@ -23,6 +24,7 @@ import org.shiqing.ibd.services.QuoteService;
 public class QuotePerformanceEnricher implements Enricher {
 	
 	private QuoteService quoteService;
+	private final static Logger logger = Logger.getLogger(QuotePerformanceEnricher.class);
 	
 	public QuotePerformanceEnricher() {
 		quoteService = (QuoteService)ConfigFactory.get().getBean("quoteService");
@@ -59,12 +61,9 @@ public class QuotePerformanceEnricher implements Enricher {
 	}
 	
 	private void log(String symbol, Pair<Double, Double> quotes, TimePeriod timePeriod) {
-		System.out.println("---------------------");
-		System.out.println(symbol);
-		System.out.println("Timeperiod is " + timePeriod.getNumberOfWeeks() + " weeks");
-		System.out.println("Current price is " + quotes.getLeft());
-		System.out.println("Old price is " + quotes.getRight());
-		System.out.println("---------------------");
+		logger.info("Get " + symbol + " for " + timePeriod.getNumberOfWeeks() + " weeks");
+		logger.info("Current price is " + quotes.getLeft());
+		logger.info("Old price is " + quotes.getRight());
 	}
 	
 	public static void main(String[] args) {

@@ -1,0 +1,6 @@
+2016-09-22 13:40:48 INFO  QuotePerformanceEnricher:64 - Timeperiod is 5 weeks
+2016-09-22 13:40:48 INFO  QuotePerformanceEnricher:65 - Current price is 74.18
+2016-09-22 13:40:48 INFO  QuotePerformanceEnricher:66 - Old price is 76.910004
+2016-09-22 13:50:50 INFO  QuotePerformanceEnricher:64 - Get CRM for 5 weeks
+2016-09-22 13:50:50 INFO  QuotePerformanceEnricher:65 - Current price is 74.18
+2016-09-22 13:50:50 INFO  QuotePerformanceEnricher:66 - Old price is 76.910004

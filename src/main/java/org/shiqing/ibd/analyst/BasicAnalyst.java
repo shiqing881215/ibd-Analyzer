@@ -3,6 +3,7 @@ package org.shiqing.ibd.analyst;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.shiqing.ibd.analyzer.Analyzer;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.analyzer.HighOccurrenceAnalyzer;
@@ -32,6 +33,8 @@ import com.google.common.collect.Lists;
  */
 public class BasicAnalyst extends Analyst {
 	
+	private static final Logger logger = Logger.getLogger(BasicAnalyst.class);
+	
 	public BasicAnalyst(SpreadsheetScanner scanner, Analyzer analyzer, List<Filter> filters, List<Enricher> enrichers, SpreadsheetPrinter printer) {
 		super(scanner, analyzer, filters, enrichers, printer);
 	}
@@ -42,6 +45,8 @@ public class BasicAnalyst extends Analyst {
 	}
 
 	public static void main(String[] args) throws IOException {
+		logger.info("Running BasicAnalyst......");
+		
 		// TODO Reuse the ratingScanner and defaultFilter
 		Filter defaultFilter = new DefaultFilter();
 		Filter weeklyFilter = new WeeklyFilter();
