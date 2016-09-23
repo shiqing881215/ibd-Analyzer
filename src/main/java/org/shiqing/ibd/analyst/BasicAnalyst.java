@@ -47,18 +47,40 @@ public class BasicAnalyst extends Analyst {
 	public static void main(String[] args) throws IOException {
 		logger.info("Running BasicAnalyst......");
 		
-		// TODO Reuse the ratingScanner and defaultFilter
+		SpreadsheetScanner ratingScanner = new RatingScanner();
+		
+		Analyzer fullAnalyzer = new FullAnalyzer();
+		Analyzer ibd50AndSectorLeaderAnalyzer = new IBD50AndSectorLeaderAnalyzer();
+		Analyzer highOccurrenceAnalyzer = new HighOccurrenceAnalyzer();
+		
 		Filter defaultFilter = new DefaultFilter();
 		Filter weeklyFilter = new WeeklyFilter();
+		
 		Enricher defaultEnricher = new DefaultEnricher();
 		
-		Analyst analyst = new BasicAnalyst(new RatingScanner(), new FullAnalyzer(), Lists.newArrayList(defaultFilter), Lists.newArrayList(defaultEnricher), new FullSpreadsheetPrinter());
+		SpreadsheetPrinter fullPrinter = new FullSpreadsheetPrinter();
+		SpreadsheetPrinter ibd50AndSectorLeaderPrinter = new IBD50AndSectorLeaderSpreadsheetPrinter();
+		SpreadsheetPrinter highOccurrencePrinter = new HighOccurrenceSpreadsheetPrinter();
+		
+		Analyst analyst = new BasicAnalyst(ratingScanner, 
+				fullAnalyzer, 
+				Lists.newArrayList(defaultFilter), 
+				Lists.newArrayList(defaultEnricher), 
+				fullPrinter);
 		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new RatingScanner(), new IBD50AndSectorLeaderAnalyzer(), Lists.newArrayList(weeklyFilter), Lists.newArrayList(defaultEnricher), new IBD50AndSectorLeaderSpreadsheetPrinter());
+		analyst = new BasicAnalyst(ratingScanner, 
+				ibd50AndSectorLeaderAnalyzer, 
+				Lists.newArrayList(weeklyFilter), 
+				Lists.newArrayList(defaultEnricher), 
+				ibd50AndSectorLeaderPrinter);
 		analyst.brainstorm();
 		
-		analyst = new BasicAnalyst(new RatingScanner(), new HighOccurrenceAnalyzer(), Lists.newArrayList(defaultFilter), Lists.newArrayList(defaultEnricher), new HighOccurrenceSpreadsheetPrinter());
+		analyst = new BasicAnalyst(ratingScanner, 
+				highOccurrenceAnalyzer, 
+				Lists.newArrayList(defaultFilter), 
+				Lists.newArrayList(defaultEnricher), 
+				highOccurrencePrinter);
 		analyst.brainstorm();
 	}
 }

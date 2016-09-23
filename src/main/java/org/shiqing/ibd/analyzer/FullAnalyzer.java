@@ -28,7 +28,6 @@ public class FullAnalyzer implements Analyzer {
 
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
 		for (int i = 0; i < stockLists.size(); i++) {
-			// The Spreadsheet here is actually StockList TODO Find a clearer way
 			StockList stockList = (StockList)(stockLists.get(i));
 			for (Stock stock : stockList.getStocks()) {
 				result.addStockAnalyzeResult(stock, stockList.getName());

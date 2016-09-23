@@ -23,13 +23,11 @@ public class IBD50AndSectorLeaderHistoryAnalyzer implements Analyzer {
 
 	public IBD50AndSectorLeaderHistoryAnalyzer() {
 		super();
-		// TODO Make it configurable Update this later
 		result = new IBD50AndSectorLeaderStockListAnalyzeResult();
 	}
 
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
 		for (int i = 0; i < stockLists.size(); i++) {
-			// The Spreadsheet here is actually StockList TODO Find a clearer way
 			IBD50AndSectorLeaderStockList stockList = (IBD50AndSectorLeaderStockList)(stockLists.get(i));
 			for (StockAnalyzeResult stock : stockList.getStocks()) {
 				result.addStockAnalyzeResult(stock, stockList.getName());

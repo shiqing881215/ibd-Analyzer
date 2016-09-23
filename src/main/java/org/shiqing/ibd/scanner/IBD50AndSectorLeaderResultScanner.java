@@ -46,6 +46,11 @@ public class IBD50AndSectorLeaderResultScanner implements SpreadsheetScanner {
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
 				
+				// Defend check to prevent empty row
+				if (row.getCell(0).getStringCellValue() == null || row.getCell(0).getStringCellValue().isEmpty()) {
+					break;
+				}
+				
 				StockAnalyzeResult stockAnalyzeResult = new StockAnalyzeResult(
 						row.getCell(0).getStringCellValue(), 
 						row.getCell(1).getStringCellValue(), 

@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.text.MessageFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -22,8 +20,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
-import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
-import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
@@ -31,7 +27,12 @@ import com.google.common.collect.Lists;
 
 public class SpreadsheetPrinterUtil {
 	
-	// TODO Better way
+	// The reason to have this static variable is 
+	// The print date is based on last week result
+	// But all the output spreadsheets are in the same directory
+	// So if we are not reusing the date in this run 
+	// All the output spreadsheets generated in this run will have different date
+	// which is next Friday of latest date in the result directory
 	private static String printDate = null;
 	
 	/**
@@ -49,7 +50,10 @@ public class SpreadsheetPrinterUtil {
 	 */
 	public static void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet, 
 			boolean highlight, String generatedFileName) {
-		// TODO Better way
+		// Make sure outputSpreadsheet is an StockListAnalyzeResult instance
+		// Right now Full / IBD50AndSectorLeader / HighOccurrence analyzer are using this method
+		assert outputSpreadsheet instanceof StockListAnalyzeResult : "OutputSpreadsheet passed here is not a StockListAnalyzeResult instance.";
+		
 		StockListAnalyzeResult stockListAnalyzeResult = (StockListAnalyzeResult)outputSpreadsheet;
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -102,71 +106,6 @@ public class SpreadsheetPrinterUtil {
 		}
 	}
 	
-	public static void generateGoldenSpreadsheet(OutputSpreadsheet outputSpreadsheet, String generatedFileName) {
-		// TODO Better way
-		IBD50AndSectorLeaderStockListAnalyzeResult stockListAnalyzeResult = (IBD50AndSectorLeaderStockListAnalyzeResult)outputSpreadsheet;
-		
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		HSSFSheet sheet = workbook.createSheet("Result");
-		List<String> titles = getOutputSpreadsheetTitle(IBD50AndSectorLeaderStockAnalyzeResult.class.getName());
-		
-		Set<String> keyset = stockListAnalyzeResult.getResult().keySet();
-		int rownum = 0;
-		// Print title first
-		Row row = sheet.createRow(rownum++);
-		int cellNum = 0;
-		for (String title : titles) {
-			row.createCell(cellNum++).setCellValue(title);
-		}
-		
-		for (String key : keyset) {
-			row = sheet.createRow(rownum++);
-			IBD50AndSectorLeaderStockAnalyzeResult stockAnalyzeResult = stockListAnalyzeResult.getResult().get(key);
-			int cellnum = 0;
-			
-			Cell symbolCell = row.createCell(cellnum++);
-			Cell nameCell = row.createCell(cellnum++);
-			Cell occuranceCell = row.createCell(cellnum++);
-			Cell involvedSpreadsheetsCell = row.createCell(cellnum++);
-			Cell continuityCell = row.createCell(cellnum++);
-			Cell oneWeekPerformanceCell = row.createCell(cellnum++);
-			Cell oneMonthPerformanceCell = row.createCell(cellnum++);
-			Cell threeMonthsPerformanceCell = row.createCell(cellnum++);
-			Cell sixMonthsPerformanceCell = row.createCell(cellnum++);
-			
-			symbolCell.setCellValue(stockAnalyzeResult.getSymbol());
-			nameCell.setCellValue(stockAnalyzeResult.getName());
-			occuranceCell.setCellValue(stockAnalyzeResult.getOccurrence());
-			// Sort dates before printing out
-			Object[] sortedDates = stockAnalyzeResult.getInvolvedDates().toArray();
-			Arrays.sort(sortedDates);
-			involvedSpreadsheetsCell.setCellValue(Arrays.toString(sortedDates));
-			continuityCell.setCellValue(stockAnalyzeResult.getContinuity());
-			oneWeekPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getOneWeekPerformance()));
-			oneMonthPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getOneMonthPerformance()));
-			threeMonthsPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getThreeMonthsPerformance()));
-			sixMonthsPerformanceCell.setCellValue(MessageFormat.format("{0,number,#.##%}", stockAnalyzeResult.getSixMonthsPerformance()));
-		}
-		
-		try {
-			FileOutputStream out = 
-					new FileOutputStream(new File(generatedFileName));
-			workbook.write(out);
-			out.close();
-			workbook.close();
-			System.out.println(generatedFileName + " written successfully..");
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static LocalDate getNextFriday(LocalDate d) {
-		return d.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
-	}
-	
 	/**
 	 * Get the print out date for all the result spreadsheet.
 	 * The logic is : 
@@ -212,7 +151,7 @@ public class SpreadsheetPrinterUtil {
 		return printDate;
 	}
 	
-	private static List<String> getOutputSpreadsheetTitle(String className) {
+	public static List<String> getOutputSpreadsheetTitle(String className) {
 		List<String> titles = Lists.newArrayList();
 		try {
 			for (Field field : Class.forName(className).getDeclaredFields()) {
@@ -225,19 +164,7 @@ public class SpreadsheetPrinterUtil {
 		return titles;
 	}
 	
-	public static void main(String[] args) {
-//		try{
-//            Class c = Class.forName(StockAnalyzeResult.class.getName());//("org.shiqing.ibd.model.output.StockAnalyzeResult");
-//            System.out.println("Class Name :"+c.getName()+"\n");
-//            Field allFieldArray[] = c.getDeclaredFields();
-//             
-//            int size = allFieldArray.length;
-//            for(int i = 0 ; i < size ; i++)
-//             {
-//                System.out.println("Field ( "+i+" ) :"+allFieldArray[i]); 
-//             }  
-//        }catch (Exception e) {
-//           e.printStackTrace();
-//        }
+	private static LocalDate getNextFriday(LocalDate d) {
+		return d.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
 	}
 }

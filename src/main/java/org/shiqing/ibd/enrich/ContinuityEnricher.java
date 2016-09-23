@@ -64,7 +64,6 @@ public class ContinuityEnricher implements Enricher {
 		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.result"));
 		File[] files = root.listFiles();
 		
-		// TODO Remove hardcode directory
 		for (File file : files) {
 			if (file.isFile() && file.getName().contains("ibd50_plus_sector_leader")) {
 				allDates.add(file.getName().substring(0, 8).replaceAll("_", "/"));

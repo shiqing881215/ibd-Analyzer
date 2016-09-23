@@ -22,7 +22,7 @@ import com.google.common.collect.Sets;
  * 
  * The reason to have this filter is :
  * 1. Right now the IBD50 + Sector Leader is only based on the raw spreadsheets from IBD on each Friday,
- *    even through the spreadsheet is updated each day. (Lack of automation to do this. TODO improve it)
+ *    even through the spreadsheet is updated each day. (Lack of automation to do this.)
  * 2. So there could be two situation which is not ideal : 
  *    1) A stock showing up from Monday to Thursday but miss Friday. But this is fine, we only care about
  *       the stock which is still showing on the list by the end of each week. So if it disappear from Friday,
@@ -44,6 +44,8 @@ public class WeeklyFilter implements Filter {
 	 */
 	public OutputSpreadsheet filtrate(OutputSpreadsheet outputSpreadsheet) {
 		// TODO Better way to config this hardcode cast
+		//      This may bring some issue if we want to do the weekly filtering on the second-level result
+		//      which means the outputSpreadsheet here is not necessarily an StockListAnalyzeResult instance
 		StockListAnalyzeResult result = (StockListAnalyzeResult)outputSpreadsheet;
 		Set<String> filteringCriteria = getFilteringCriteria();
 		
@@ -65,7 +67,6 @@ public class WeeklyFilter implements Filter {
 		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root"));
 		File[] files = root.listFiles();
 		
-		// TODO Remove hardcode directory
 		for (File file : files) {
 			if (file.isFile() && file.getName().contains("WEEKLY")) {
 				return (String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName();
@@ -75,6 +76,10 @@ public class WeeklyFilter implements Filter {
 		return null;
 	}
 	
+	/**
+	 * Get a set of stock symbols
+	 * @return set of stock symbols
+	 */
 	private Set<String> getFilteringCriteria() {
 		Set<String> filteringCriteria = Sets.newHashSet();
 		
@@ -88,8 +93,22 @@ public class WeeklyFilter implements Filter {
 			// Get the first sheet
 			HSSFSheet sheet = workbook.getSheetAt(0);
 			
-			// Start from line 10. TODO better way for this hardcode line number
-			for (int i = 9; i < sheet.getPhysicalNumberOfRows(); i++) {
+			// First find the row number that stock symbol starting to show
+			int i = 0;
+			for (; i < sheet.getPhysicalNumberOfRows(); i++) {
+				Row row = sheet.getRow(i);
+				if (row == null || row.getCell(0) == null || row.getCell(0).getStringCellValue() == null) {
+					continue;
+				} else {
+					if (row.getCell(0).getStringCellValue().equalsIgnoreCase("Symbol")) {
+						i++;
+						break;
+					}
+				}
+			}
+			
+			// Right now i has the correct line number pointing to the first symbol in the spreadsheet (if not change this should be line 10 and i=9)
+			for (; i < sheet.getPhysicalNumberOfRows(); i++) {
 				Row row = sheet.getRow(i);
 				if (row == null || row.getCell(0) == null || row.getCell(0).getStringCellValue() == null || row.getCell(0).getStringCellValue().isEmpty()) {
 					break;
