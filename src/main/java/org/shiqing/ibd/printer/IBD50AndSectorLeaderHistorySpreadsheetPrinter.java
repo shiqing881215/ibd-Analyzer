@@ -32,7 +32,7 @@ public class IBD50AndSectorLeaderHistorySpreadsheetPrinter implements Spreadshee
 		generateGoldenSpreadsheet(outputSpreadsheet, fileName);
 	}
 	
-	private void generateGoldenSpreadsheet(OutputSpreadsheet outputSpreadsheet, String generatedFileName) {
+	protected void generateGoldenSpreadsheet(OutputSpreadsheet outputSpreadsheet, String generatedFileName) {
 		// Make sure outputSpreadsheet is an IBD50AndSectorLeaderStockListAnalyzeResult instance
 		// Right now IBD50AndSectorLeaderHistory analyzer is using this method
 		assert outputSpreadsheet instanceof IBD50AndSectorLeaderStockListAnalyzeResult : "OutputSpreadsheet passed here is not a IBD50AndSectorLeaderStockListAnalyzeResult instance.";
