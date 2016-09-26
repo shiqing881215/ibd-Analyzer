@@ -1,6 +1,9 @@
 package org.shiqing.ibd.model.output;
 
+import java.util.Map;
 import java.util.Set;
+
+import org.shiqing.ibd.model.TimePeriod;
 
 import com.google.common.collect.Sets;
 
@@ -9,11 +12,13 @@ import com.google.common.collect.Sets;
  * @author shiqing
  *
  */
+// TODO Make it more generic as the first level single stock output pojo
 public class StockAnalyzeResult {
 	private String symbol;
 	private String name;
 	private Integer occurrence;
 	private Set<String> involvedSpreadsheets;
+	private Map<TimePeriod, Double> quotePerformance;
 	
 	public StockAnalyzeResult() {
 		involvedSpreadsheets = Sets.newHashSet();
@@ -50,5 +55,11 @@ public class StockAnalyzeResult {
 	}
 	public void setInvolvedSpreadsheets(Set<String> involvedSpreadsheets) {
 		this.involvedSpreadsheets = involvedSpreadsheets;
+	}
+	public Map<TimePeriod, Double> getQuotePerformance() {
+		return quotePerformance;
+	}
+	public void setQuotePerformance(Map<TimePeriod, Double> quotePerformance) {
+		this.quotePerformance = quotePerformance;
 	}
 }

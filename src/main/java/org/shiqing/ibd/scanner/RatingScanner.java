@@ -18,12 +18,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 /**
- * Strategy that is focused on extracting the rating data.
+ * Scanner that is focused on extracting the rating data.
+ * 
  * @author shiqing
  *
  */
 public class RatingScanner implements SpreadsheetScanner {
 
+	// TODO Remove this hardcode string list
 	private static final List<String> RATING_CATEGORY = Lists.newArrayList(
 			"Symbol", "Company Name", "Price", "Composite Rating", "EPS Rating", "RS Rating", "SMR Rating", "ACC/DIS Rating");
 	private Map<String, Integer> ratingCategoryColumnIndex = Maps.newHashMap();

@@ -1,5 +1,6 @@
 package org.shiqing.ibd.config;
 
+import org.shiqing.ibd.context.ContextProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -20,6 +21,11 @@ public class AppConfig {
 	@Bean(name="propertiesProvider")
 	public PropertiesProvider propertiesProvider() {
 		return new PropertiesProvider();
+	}
+	
+	@Bean(name="contextProvider")
+	public ContextProvider contextProvier() {
+		return new ContextProvider();
 	}
 	
 }

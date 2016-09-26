@@ -12,7 +12,7 @@ import org.shiqing.ibd.enrich.DefaultEnricher;
 import org.shiqing.ibd.enrich.Enricher;
 import org.shiqing.ibd.filter.DefaultFilter;
 import org.shiqing.ibd.filter.Filter;
-import org.shiqing.ibd.filter.WeeklyFilter;
+import org.shiqing.ibd.filter.WeeklySymbolFilter;
 import org.shiqing.ibd.printer.FullSpreadsheetPrinter;
 import org.shiqing.ibd.printer.HighOccurrenceSpreadsheetPrinter;
 import org.shiqing.ibd.printer.IBD50AndSectorLeaderSpreadsheetPrinter;
@@ -54,7 +54,7 @@ public class BasicAnalyst extends Analyst {
 		Analyzer highOccurrenceAnalyzer = new HighOccurrenceAnalyzer();
 		
 		Filter defaultFilter = new DefaultFilter();
-		Filter weeklyFilter = new WeeklyFilter();
+		Filter weeklyFilter = new WeeklySymbolFilter();
 		
 		Enricher defaultEnricher = new DefaultEnricher();
 		

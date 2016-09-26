@@ -41,7 +41,8 @@ public class QuoteService {
 		Calendar to = Calendar.getInstance();
 		from.add(Calendar.WEEK_OF_YEAR, -timePeriod.getNumberOfWeeks());
 		
-		Stock stock = YahooFinance.get(symbol, true);
+		final Stock stock = YahooFinance.get(symbol, true);
+		// History is starting one previous day, so here even to is supposed to today, but it's actually yesterday TODO Re-test this during weekends
 		final List<HistoricalQuote> historyQuotes = stock.getHistory(from, to, Interval.DAILY);
 		
 		return new Pair<Double, Double>() {
@@ -54,7 +55,7 @@ public class QuoteService {
 			
 			@Override
 			public Double getLeft() {
-				return historyQuotes.get(0).getClose().doubleValue();
+				return stock.getQuote().getPrice().doubleValue();
 			}
 			
 			@Override
@@ -65,26 +66,7 @@ public class QuoteService {
 	}
 	
 	public static void main(String[] args) {
-		/*
-		Calendar from = Calendar.getInstance();
-		Calendar to = Calendar.getInstance();
-//		from.add(Calendar.DAY_OF_YEAR, -2); // from 1 year ago
-		from.set(2016, 8, 16);
-		to.set(2016, 8, 16);
-		
-		Stock stock = YahooFinance.get("CRM", true);
-		
-		List<HistoricalQuote> googleHistQuotes = stock.getHistory(from, to, Interval.DAILY);
-		 
-//		BigDecimal price = stock.getQuote().getPrice();
-//		BigDecimal change = stock.getQuote().getChangeInPercent();
-//		BigDecimal peg = stock.getStats().getPeg();
-//		BigDecimal dividend = stock.getDividend().getAnnualYieldPercent();
-		 
-		stock.print();
-		System.out.println(googleHistQuotes.get(0).getClose());  */
-		
-//		System.out.println(QuoteService.getService().getHistoryQuotes("CRM", TimePeriod.ONE_MONTH));
-//		System.out.println(QuoteService.getService().getQuote("FB", 16, 9, 20));
+		QuoteService qs = new QuoteService();
+		System.out.println(qs.getHistoryQuotes("GRUB", TimePeriod.ONE_WEEK));
 	}
 }

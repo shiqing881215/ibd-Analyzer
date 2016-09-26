@@ -8,11 +8,12 @@ import com.google.common.collect.Sets;
  * A single stock anaylyze result specific for IBD50 + Sector Leader.
  * 
  * A sample data format : 
- * MXL | Maxlinear.Inc | 3 | 08_21_16, 08_28_16, 09_05_16 | ** *** ***** | 1.61% | 5.71% | 12.96% | 37.84%
+ * MXL | Maxlinear.Inc | 3 | 08_21_16, 08_28_16, 09_05_16 | **//***//***** | 1.61% | 5.71% | 12.96% | 37.84%
  * 
  * @author shiqing
  *
  */
+// TODO Make it more generic as the second level single stock output pojo
 public class IBD50AndSectorLeaderStockAnalyzeResult {
 	private String symbol;
 	private String name;

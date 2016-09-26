@@ -9,26 +9,23 @@ import org.shiqing.ibd.model.input.StockList;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 /**
- * Full analyzer 
- *     - print all the info of each stock shown in the all stock lists
- *     - highlights the stocks that have equal or more than 3 in occurrence
+ * 
+ * Analyzer for IPO data.
  * 
  * @author shiqing
  *
  */
-public class FullAnalyzer implements Analyzer {
-	
-	// Keep a local copy of analyze result
-	protected StockListAnalyzeResult result;
-	
-	public FullAnalyzer() {
-		super();
-		this.result = new StockListAnalyzeResult();
-	}
+public class IPOAnalyzer implements Analyzer {
 
+	/**
+	 * Right now it just map the java pojo.
+	 * It's pretty much same as FullAnalyzer, but later we can add additional analyze here.
+	 */
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets) {
-		for (int i = 0; i < inputSpreadsheets.size(); i++) {
-			StockList stockList = (StockList)(inputSpreadsheets.get(i));
+		StockListAnalyzeResult result = new StockListAnalyzeResult();
+		
+		for (InputSpreadsheet inputSpreadsheet : inputSpreadsheets) {
+			StockList stockList = (StockList)inputSpreadsheet;
 			for (Stock stock : stockList.getStocks()) {
 				result.addStockAnalyzeResult(stock, stockList.getName());
 			}
@@ -36,4 +33,5 @@ public class FullAnalyzer implements Analyzer {
 		
 		return result;
 	}
+
 }

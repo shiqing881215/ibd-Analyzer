@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.shiqing.ibd.model.InputSpreadsheet;
 import org.shiqing.ibd.model.OutputSpreadsheet;
-import org.shiqing.ibd.model.input.StockList;
-import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 /**
  * 
@@ -18,8 +16,8 @@ import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 public interface Analyzer {
 	
 	/**
-	 * Analyze a list of {@link StockList} and generate specific result based on the strategy.
-	 * @return A {@link StockListAnalyzeResult} that can be used to print out a single result spreadsheet.
+	 * Analyze a list of {@link InputSpreadsheet} and generate specific result based on the strategy.
+	 * @return A {@link OutputSpreadsheet} that can be used to print out a single result spreadsheet.
 	 */
-	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists);
+	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets);
 }

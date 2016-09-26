@@ -10,6 +10,7 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.TimePeriod;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 import org.shiqing.ibd.services.QuoteService;
 
 /**
@@ -34,23 +35,32 @@ public class QuotePerformanceEnricher implements Enricher {
 	 * Set performance quote for each stock
 	 */
 	public OutputSpreadsheet enrich(OutputSpreadsheet outputSpreadsheet) {
-		IBD50AndSectorLeaderStockListAnalyzeResult result = (IBD50AndSectorLeaderStockListAnalyzeResult)outputSpreadsheet;
+		if (outputSpreadsheet instanceof StockListAnalyzeResult) {
+			StockListAnalyzeResult result = (StockListAnalyzeResult)outputSpreadsheet;
 		
-		Iterator<Entry<String, IBD50AndSectorLeaderStockAnalyzeResult>> iterator = result.getResult().entrySet().iterator();
-		while(iterator.hasNext()) {
-			IBD50AndSectorLeaderStockAnalyzeResult singleStockResult = iterator.next().getValue();
-			double oneWeekPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_WEEK);
-			double oneMonthPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_MONTH);
-			double threeMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.THREE_MONTHS);
-			double sixMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.SIX_MONTHS);
+			// TODO ............
 			
-			singleStockResult.setOneWeekPerformance(oneWeekPerformance);
-			singleStockResult.setOneMonthPerformance(oneMonthPerformance);
-			singleStockResult.setThreeMonthsPerformance(threeMonthsPerformance);
-			singleStockResult.setSixMonthsPerformance(sixMonthsPerformance);
+			return result;
+		} else if (outputSpreadsheet instanceof IBD50AndSectorLeaderStockListAnalyzeResult) {
+			IBD50AndSectorLeaderStockListAnalyzeResult result = (IBD50AndSectorLeaderStockListAnalyzeResult)outputSpreadsheet;
+			
+			// TODO Need also work for first level result
+			Iterator<Entry<String, IBD50AndSectorLeaderStockAnalyzeResult>> iterator = result.getResult().entrySet().iterator();
+			while(iterator.hasNext()) {
+				IBD50AndSectorLeaderStockAnalyzeResult singleStockResult = iterator.next().getValue();
+				double oneWeekPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_WEEK);
+				double oneMonthPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_MONTH);
+				double threeMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.THREE_MONTHS);
+				double sixMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.SIX_MONTHS);
+				
+				singleStockResult.setOneWeekPerformance(oneWeekPerformance);
+				singleStockResult.setOneMonthPerformance(oneMonthPerformance);
+				singleStockResult.setThreeMonthsPerformance(threeMonthsPerformance);
+				singleStockResult.setSixMonthsPerformance(sixMonthsPerformance);
+			}
 		}
 		
-		return result;
+		return null;
 	}
 
 	private double getQuotePerformance(String symbol, TimePeriod timePeriod) {

@@ -1,6 +1,5 @@
 package org.shiqing.ibd.filter;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
@@ -10,7 +9,6 @@ import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
@@ -18,34 +16,29 @@ import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 import com.google.common.collect.Sets;
 
 /**
- * A weekly filter which uses YOUR WEEKLY REVIVEW.xls as the filtering criteria.
  * 
- * The reason to have this filter is :
- * 1. Right now the IBD50 + Sector Leader is only based on the raw spreadsheets from IBD on each Friday,
- *    even through the spreadsheet is updated each day. (Lack of automation to do this.)
- * 2. So there could be two situation which is not ideal : 
- *    1) A stock showing up from Monday to Thursday but miss Friday. But this is fine, we only care about
- *       the stock which is still showing on the list by the end of each week. So if it disappear from Friday,
- *       then that means it's not good and we don't want it any more.
- *    2) A stock NOT showing from Monday to Thursday but only showing on Friday. We want to find a true leader
- *       instead of some magical stock just showing up once. So to avoid this situation, we use the weekly review
- *       spreadsheet as a defender which list the stocks performing good across the week. 
- *       So if a stock is just a flash in the pan, it will be filtered by this.
- *       
- *  Also, ideally as mentioned above. If finally we can make this program running daily, this is not necessary any more.
+ * Basic filter class focus on using symbol to filter out.
+ * If you want use a certain spreadsheet symbol as the filter criteria.
+ * Create YourSpecificSpreadsheetSymbolFilter.java and extend this class.
+ * 
+ * Override getFilteringCriteriaFile() to provide the spreadsheet name which 
+ * you will its symbol list to do filtering.
+ * 
+ * Example : TODO Add name here
  * 
  * @author shiqing
  *
  */
-public class WeeklyFilter implements Filter {
+public abstract class SymbolFilter implements Filter {
 	
 	/**
-	 * Go through each row and if the symbol not showing in the weekly review, remove the line
+	 * Go through each row and if the symbol not showing in the filtering spreadsheet, remove the line
 	 */
 	public OutputSpreadsheet filtrate(OutputSpreadsheet outputSpreadsheet) {
 		// TODO Better way to config this hardcode cast
-		//      This may bring some issue if we want to do the weekly filtering on the second-level result
+		//      This may bring some issue if we want to do the filtering on the second-level result
 		//      which means the outputSpreadsheet here is not necessarily an StockListAnalyzeResult instance
+		//      Right now, all the filtering happen on the first-level result
 		StockListAnalyzeResult result = (StockListAnalyzeResult)outputSpreadsheet;
 		Set<String> filteringCriteria = getFilteringCriteria();
 		
@@ -63,21 +56,15 @@ public class WeeklyFilter implements Filter {
 		return result;
 	}
 
-	private String getFilteringCriteriaFile() {
-		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root"));
-		File[] files = root.listFiles();
-		
-		for (File file : files) {
-			if (file.isFile() && file.getName().contains("WEEKLY")) {
-				return (String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName();
-			}
-		}
-		
-		return null;
-	}
+	/**
+	 * Override this method to return spreadsheet full path name that you want
+	 * use as the filter spreadsheet.
+	 * @return
+	 */
+	protected abstract String getFilteringCriteriaFile();
 	
 	/**
-	 * Get a set of stock symbols
+	 * Get a set of stock symbols in the filtering spreadsheet
 	 * @return set of stock symbols
 	 */
 	private Set<String> getFilteringCriteria() {

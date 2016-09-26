@@ -18,19 +18,20 @@ import org.shiqing.ibd.model.output.StockListAnalyzeResult;
  */
 public class HighOccurrenceAnalyzer extends FullAnalyzer {
 	
+	// TODO Remove hardcode
 	private static final int THRESHOLD = 3;
 	private static final String IBD_50 ="IBD 50";
 	private static final String SECTOR_LEADERS ="SECTOR LEADERS";
 
 	@Override
-	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
+	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets) {
 		StockListAnalyzeResult fullAnalyzerResult;
 		
 		// Check whether the full analyze has been called somewhere to save some time
 		if (!super.result.getResult().isEmpty()) {
 			fullAnalyzerResult = super.result;
 		} else {
-			fullAnalyzerResult = (StockListAnalyzeResult)(super.analyze(stockLists));
+			fullAnalyzerResult = (StockListAnalyzeResult)(super.analyze(inputSpreadsheets));
 		}
 		
 		StockListAnalyzeResult highOccurrenceAnalyzeResult = new StockListAnalyzeResult();

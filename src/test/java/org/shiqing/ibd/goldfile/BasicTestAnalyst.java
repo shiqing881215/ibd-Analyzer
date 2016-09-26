@@ -15,7 +15,7 @@ import org.shiqing.ibd.enrich.DefaultEnricher;
 import org.shiqing.ibd.enrich.Enricher;
 import org.shiqing.ibd.filter.DefaultFilter;
 import org.shiqing.ibd.filter.Filter;
-import org.shiqing.ibd.filter.WeeklyFilter;
+import org.shiqing.ibd.filter.WeeklySymbolFilter;
 import org.shiqing.ibd.printer.SpreadsheetPrinter;
 import org.shiqing.ibd.scanner.RatingScanner;
 import org.shiqing.ibd.scanner.SpreadsheetScanner;
@@ -65,7 +65,7 @@ public class BasicTestAnalyst extends BasicAnalyst {
 		Analyzer highOccurrenceAnalyzer = new HighOccurrenceAnalyzer();
 		
 		Filter defaultFilter = new DefaultFilter();
-		Filter weeklyFilter = new WeeklyFilter();
+		Filter weeklyFilter = new WeeklySymbolFilter();
 		
 		Enricher defaultEnricher = new DefaultEnricher();
 		
