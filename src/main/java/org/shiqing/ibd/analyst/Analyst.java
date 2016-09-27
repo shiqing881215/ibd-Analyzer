@@ -3,6 +3,8 @@ package org.shiqing.ibd.analyst;
 import java.util.List;
 
 import org.shiqing.ibd.analyzer.Analyzer;
+import org.shiqing.ibd.config.ConfigFactory;
+import org.shiqing.ibd.context.ContextImpl;
 import org.shiqing.ibd.enrich.Enricher;
 import org.shiqing.ibd.filter.Filter;
 import org.shiqing.ibd.model.InputSpreadsheet;
@@ -80,7 +82,14 @@ public abstract class Analyst implements IAnalyst {
 	 * 6. Generate the result spreadsheets
 	 */
 	public void brainstorm() {
+		// Set up context first
+		ConfigFactory.get().getContextProvider().establishOrUpdateContext(new ContextImpl());
+		
+		// Do the real work
 		generateResultSpreadsheet(enrich(filtrate(analyze(extract(getInputSpreadsheetPaths())))));
+		
+		// Clean up the context
+		ConfigFactory.get().getContextProvider().releaseContext();
 	}
 	
 	protected abstract List<String> getInputSpreadsheetPaths();

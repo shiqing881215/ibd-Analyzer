@@ -1,5 +1,6 @@
 package org.shiqing.ibd.config;
 
+import org.shiqing.ibd.context.ContextProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -34,5 +35,10 @@ public class ConfigFactory {
 	// Add a specific method for .properties config file cause it will be used more frequently
 	public PropertiesProvider getPropertiesProvider() {
 		return (PropertiesProvider)getBean("propertiesProvider");
+	}
+	
+	// Add a specific method for context provider cause it will be used more frequently
+	public ContextProvider getContextProvider() {
+		return (ContextProvider)getBean("contextProvider");
 	}
 }

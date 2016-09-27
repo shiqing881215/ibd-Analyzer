@@ -22,6 +22,9 @@ public class IPOAnalyzer implements Analyzer {
 	 * It's pretty much same as FullAnalyzer, but later we can add additional analyze here.
 	 */
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets) {
+		// First update the context
+		AnalyzerUtil.updateContext(this.getClass().getSimpleName());
+		
 		StockListAnalyzeResult result = new StockListAnalyzeResult();
 		
 		for (InputSpreadsheet inputSpreadsheet : inputSpreadsheets) {

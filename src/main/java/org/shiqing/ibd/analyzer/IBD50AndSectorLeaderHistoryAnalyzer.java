@@ -27,6 +27,9 @@ public class IBD50AndSectorLeaderHistoryAnalyzer implements Analyzer {
 	}
 
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> stockLists) {
+		// First update the context
+		AnalyzerUtil.updateContext(this.getClass().getSimpleName());
+		
 		for (int i = 0; i < stockLists.size(); i++) {
 			IBD50AndSectorLeaderStockList stockList = (IBD50AndSectorLeaderStockList)(stockLists.get(i));
 			for (StockAnalyzeResult stock : stockList.getStocks()) {

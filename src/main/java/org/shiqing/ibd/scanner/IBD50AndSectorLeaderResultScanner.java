@@ -23,6 +23,9 @@ import com.google.common.collect.Sets;
 public class IBD50AndSectorLeaderResultScanner implements SpreadsheetScanner {
 
 	public InputSpreadsheet extract(String filePath) {
+		// First update the context
+		ScannerUtil.updateContext(this.getClass().getSimpleName());
+		
 		IBD50AndSectorLeaderStockList spreadsheet = new IBD50AndSectorLeaderStockList();
 		
 		try {

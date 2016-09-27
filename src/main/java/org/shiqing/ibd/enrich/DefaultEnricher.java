@@ -11,6 +11,9 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class DefaultEnricher implements Enricher {
 
 	public OutputSpreadsheet enrich(OutputSpreadsheet outputSpreadsheet) {
+		// Update the context first
+		EnricherUtil.updateContext(this.getClass().getSimpleName());
+		
 		return outputSpreadsheet;
 	}
 

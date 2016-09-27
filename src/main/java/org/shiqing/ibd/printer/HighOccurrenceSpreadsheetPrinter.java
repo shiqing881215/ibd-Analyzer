@@ -12,10 +12,13 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class HighOccurrenceSpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
-				SpreadsheetPrinterUtil.getPrintDate() + "_high_occurence" + ".xls";
+		// Update the context first
+		PrinterUtil.updateContext(this.getClass().getSimpleName());
 		
-		SpreadsheetPrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
+		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
+				PrinterUtil.getPrintDate() + "_high_occurence" + ".xls";
+		
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
 	}
 
 }

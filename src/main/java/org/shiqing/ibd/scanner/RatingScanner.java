@@ -31,6 +31,9 @@ public class RatingScanner implements SpreadsheetScanner {
 	private Map<String, Integer> ratingCategoryColumnIndex = Maps.newHashMap();
 	
 	public InputSpreadsheet extract(String filePath) {
+		// First update the context
+		ScannerUtil.updateContext(this.getClass().getSimpleName());
+		
 		StockList stockList = new StockList();
 		
 		try {

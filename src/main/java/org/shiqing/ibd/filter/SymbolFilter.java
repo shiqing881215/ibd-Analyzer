@@ -35,6 +35,9 @@ public abstract class SymbolFilter implements Filter {
 	 * Go through each row and if the symbol not showing in the filtering spreadsheet, remove the line
 	 */
 	public OutputSpreadsheet filtrate(OutputSpreadsheet outputSpreadsheet) {
+		// Update context first
+		FilterUtil.updateContext(this.getClass().getSimpleName());
+		
 		// TODO Better way to config this hardcode cast
 		//      This may bring some issue if we want to do the filtering on the second-level result
 		//      which means the outputSpreadsheet here is not necessarily an StockListAnalyzeResult instance

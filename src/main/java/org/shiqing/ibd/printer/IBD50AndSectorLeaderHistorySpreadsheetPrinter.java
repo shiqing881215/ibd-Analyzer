@@ -27,6 +27,9 @@ import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
 public class IBD50AndSectorLeaderHistorySpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
+		// Update the context first
+		PrinterUtil.updateContext(this.getClass().getSimpleName());
+		
 		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + "Golden.xls";
 		
 		generateGoldenSpreadsheet(outputSpreadsheet, fileName);
@@ -41,7 +44,7 @@ public class IBD50AndSectorLeaderHistorySpreadsheetPrinter implements Spreadshee
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("Result");
-		List<String> titles = SpreadsheetPrinterUtil.getOutputSpreadsheetTitle(IBD50AndSectorLeaderStockAnalyzeResult.class.getName());
+		List<String> titles = PrinterUtil.getOutputSpreadsheetTitle(IBD50AndSectorLeaderStockAnalyzeResult.class.getName());
 		
 		Set<String> keyset = stockListAnalyzeResult.getResult().keySet();
 		int rownum = 0;

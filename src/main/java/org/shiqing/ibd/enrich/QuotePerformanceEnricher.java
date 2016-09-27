@@ -35,6 +35,9 @@ public class QuotePerformanceEnricher implements Enricher {
 	 * Set performance quote for each stock
 	 */
 	public OutputSpreadsheet enrich(OutputSpreadsheet outputSpreadsheet) {
+		// Update the context first
+		EnricherUtil.updateContext(this.getClass().getSimpleName());
+		
 		if (outputSpreadsheet instanceof StockListAnalyzeResult) {
 			StockListAnalyzeResult result = (StockListAnalyzeResult)outputSpreadsheet;
 		

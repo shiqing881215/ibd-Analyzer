@@ -27,6 +27,9 @@ public class FullAnalyzer implements Analyzer {
 	}
 
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets) {
+		// First update the context
+		AnalyzerUtil.updateContext(this.getClass().getSimpleName());
+		
 		for (int i = 0; i < inputSpreadsheets.size(); i++) {
 			StockList stockList = (StockList)(inputSpreadsheets.get(i));
 			for (Stock stock : stockList.getStocks()) {

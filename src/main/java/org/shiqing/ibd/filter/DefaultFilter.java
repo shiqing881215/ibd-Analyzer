@@ -11,6 +11,9 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class DefaultFilter implements Filter {
 
 	public OutputSpreadsheet filtrate(OutputSpreadsheet outputSpreadsheet) {
+		// Update context first
+		FilterUtil.updateContext(this.getClass().getSimpleName());
+		
 		return outputSpreadsheet;
 	}
 

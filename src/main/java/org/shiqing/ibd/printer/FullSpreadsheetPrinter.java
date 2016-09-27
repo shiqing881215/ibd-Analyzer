@@ -12,10 +12,13 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class FullSpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") 
-				+ SpreadsheetPrinterUtil.getPrintDate() + ".xls";
+		// Update the context first
+		PrinterUtil.updateContext(this.getClass().getSimpleName());
 		
-		SpreadsheetPrinterUtil.generateResultSpreadsheet(outputSpreadsheet, true, fileName);
+		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") 
+				+ PrinterUtil.getPrintDate() + ".xls";
+		
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, true, fileName);
 	}
 
 }

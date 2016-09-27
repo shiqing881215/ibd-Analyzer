@@ -2,7 +2,7 @@ package org.shiqing.ibd.goldfile;
 
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.printer.FullSpreadsheetPrinter;
-import org.shiqing.ibd.printer.SpreadsheetPrinterUtil;
+import org.shiqing.ibd.printer.PrinterUtil;
 
 /**
  * 
@@ -18,7 +18,7 @@ public class FullSpreadsheetTestPrinter extends FullSpreadsheetPrinter {
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
 		String fileName = "/Users/Rossi/Documents/workspace/ibd/src/test/java/org/shiqing/ibd/goldfile/raw/results/full.xls";
 		
-		SpreadsheetPrinterUtil.generateResultSpreadsheet(outputSpreadsheet, true, fileName);
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, true, fileName);
 	}
 	
 }

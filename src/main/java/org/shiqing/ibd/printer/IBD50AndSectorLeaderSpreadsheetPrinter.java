@@ -12,10 +12,13 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 public class IBD50AndSectorLeaderSpreadsheetPrinter implements SpreadsheetPrinter {
 
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
-				SpreadsheetPrinterUtil.getPrintDate() + "_ibd50_plus_sector_leader" + ".xls";
+		// Update the context first
+		PrinterUtil.updateContext(this.getClass().getSimpleName());
 		
-		SpreadsheetPrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
+		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
+				PrinterUtil.getPrintDate() + "_ibd50_plus_sector_leader" + ".xls";
+		
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
 	}
 
 }

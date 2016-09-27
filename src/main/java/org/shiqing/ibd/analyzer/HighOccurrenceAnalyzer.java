@@ -25,6 +25,9 @@ public class HighOccurrenceAnalyzer extends FullAnalyzer {
 
 	@Override
 	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets) {
+		// First update the context
+		AnalyzerUtil.updateContext(this.getClass().getSimpleName());
+		
 		StockListAnalyzeResult fullAnalyzerResult;
 		
 		// Check whether the full analyze has been called somewhere to save some time

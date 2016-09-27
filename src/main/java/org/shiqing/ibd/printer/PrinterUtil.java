@@ -19,13 +19,14 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.shiqing.ibd.analyzer.FullAnalyzer;
 import org.shiqing.ibd.config.ConfigFactory;
+import org.shiqing.ibd.context.Context;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 import com.google.common.collect.Lists;
 
-public class SpreadsheetPrinterUtil {
+public class PrinterUtil {
 	
 	// The reason to have this static variable is 
 	// The print date is based on last week result
@@ -34,6 +35,12 @@ public class SpreadsheetPrinterUtil {
 	// All the output spreadsheets generated in this run will have different date
 	// which is next Friday of latest date in the result directory
 	private static String printDate = null;
+	
+	public static void updateContext(String className) {
+		Context context = ConfigFactory.get().getContextProvider().getContext();
+		context.setPrinterName(className);
+		ConfigFactory.get().getContextProvider().establishOrUpdateContext(context);
+	}
 	
 	/**
 	 * Generate the result spreadsheet
