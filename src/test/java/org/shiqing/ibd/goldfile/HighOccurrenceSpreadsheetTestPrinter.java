@@ -1,5 +1,6 @@
 package org.shiqing.ibd.goldfile;
 
+import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.printer.HighOccurrenceSpreadsheetPrinter;
 import org.shiqing.ibd.printer.PrinterUtil;
@@ -16,7 +17,7 @@ public class HighOccurrenceSpreadsheetTestPrinter extends HighOccurrenceSpreadsh
 
 	@Override
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
-		String fileName = "/Users/Rossi/Documents/workspace/ibd/src/test/java/org/shiqing/ibd/goldfile/raw/results/high_occurrence.xls";
+		String fileName = ConfigFactory.get().getPropertiesProvider().getValue("path.test.result") + "high_occurrence.xls";
 		
 		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
 	}

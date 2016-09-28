@@ -96,9 +96,4 @@ public class IBD50AndSectorLeaderResultScanner implements SpreadsheetScanner {
 		
 		return involveSet;
 	}
-	
-	public static void main(String[] args) {
-		IBD50AndSectorLeaderResultScanner i = new IBD50AndSectorLeaderResultScanner();
-		i.extract("/Users/Rossi/Documents/IBD/results/09_10_16_ibd50_plus_sector_leader.xls");
-	}
 }

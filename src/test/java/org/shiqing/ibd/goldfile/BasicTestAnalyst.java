@@ -15,7 +15,6 @@ import org.shiqing.ibd.enrich.DefaultEnricher;
 import org.shiqing.ibd.enrich.Enricher;
 import org.shiqing.ibd.filter.DefaultFilter;
 import org.shiqing.ibd.filter.Filter;
-import org.shiqing.ibd.filter.WeeklySymbolFilter;
 import org.shiqing.ibd.printer.SpreadsheetPrinter;
 import org.shiqing.ibd.scanner.RatingScanner;
 import org.shiqing.ibd.scanner.SpreadsheetScanner;
@@ -45,12 +44,12 @@ public class BasicTestAnalyst extends BasicAnalyst {
 	private List<String> getGoldFileTestInputSpreadsheets() {
 		List<String> spreadsheets = Lists.newArrayList();
 		
-		File root = new File("/Users/Rossi/Documents/workspace/ibd/src/test/java/org/shiqing/ibd/goldfile/raw/");
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.test.root"));
 		File[] files = root.listFiles();
 		
 		for (File file : files) {
 			if (file.isFile() && !file.getName().equals("result.xls") && file.getName().endsWith(".xls")) {
-				spreadsheets.add((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName());
+				spreadsheets.add(ConfigFactory.get().getPropertiesProvider().getValue("path.test.root") + file.getName());
 			}
 		}
 		
@@ -65,7 +64,7 @@ public class BasicTestAnalyst extends BasicAnalyst {
 		Analyzer highOccurrenceAnalyzer = new HighOccurrenceAnalyzer();
 		
 		Filter defaultFilter = new DefaultFilter();
-		Filter weeklyFilter = new WeeklySymbolFilter();
+		Filter weeklyFilter = new WeeklySymbolTestFilter();
 		
 		Enricher defaultEnricher = new DefaultEnricher();
 		

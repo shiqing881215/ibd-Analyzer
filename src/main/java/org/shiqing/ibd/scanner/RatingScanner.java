@@ -134,9 +134,4 @@ public class RatingScanner implements SpreadsheetScanner {
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-		RatingScanner rs = new RatingScanner();
-		rs.extract("/Users/Rossi/Documents/IBD/SECTOR LEADERS.xls");
-	}
 }
