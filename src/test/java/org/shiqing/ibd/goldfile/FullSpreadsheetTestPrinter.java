@@ -19,7 +19,7 @@ public class FullSpreadsheetTestPrinter extends FullSpreadsheetPrinter {
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
 		String fileName = ConfigFactory.get().getPropertiesProvider().getValue("path.test.result") + "full.xls";
 		
-		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, true, fileName);
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}
 	
 }

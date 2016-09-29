@@ -11,6 +11,7 @@ import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.TimePeriod;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockListAnalyzeResult;
+import org.shiqing.ibd.model.output.StockAnalyzeResult;
 import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 import org.shiqing.ibd.services.QuoteService;
 
@@ -39,16 +40,28 @@ public class QuotePerformanceEnricher implements Enricher {
 		// Update the context first
 		EnricherUtil.updateContext(this.getClass().getSimpleName());
 		
+		// TODO  A better way to handle this 
 		if (outputSpreadsheet instanceof StockListAnalyzeResult) {
 			StockListAnalyzeResult result = (StockListAnalyzeResult)outputSpreadsheet;
-		
-			// TODO ............
+			
+			Iterator<Entry<String, StockAnalyzeResult>> iterator = result.getResult().entrySet().iterator();
+			while (iterator.hasNext()) {
+				StockAnalyzeResult singleStockResult = iterator.next().getValue();
+				double oneWeekPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_WEEK);
+				double oneMonthPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.ONE_MONTH);
+				double threeMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.THREE_MONTHS);
+				double sixMonthsPerformance = getQuotePerformance(singleStockResult.getSymbol(), TimePeriod.SIX_MONTHS);
+				
+				singleStockResult.getQuotePerformance().put(TimePeriod.ONE_WEEK, oneWeekPerformance);
+				singleStockResult.getQuotePerformance().put(TimePeriod.ONE_MONTH, oneMonthPerformance);
+				singleStockResult.getQuotePerformance().put(TimePeriod.THREE_MONTHS, threeMonthsPerformance);
+				singleStockResult.getQuotePerformance().put(TimePeriod.SIX_MONTHS, sixMonthsPerformance);
+			}
 			
 			return result;
 		} else if (outputSpreadsheet instanceof IBD50AndSectorLeaderStockListAnalyzeResult) {
 			IBD50AndSectorLeaderStockListAnalyzeResult result = (IBD50AndSectorLeaderStockListAnalyzeResult)outputSpreadsheet;
 			
-			// TODO Need also work for first level result
 			Iterator<Entry<String, IBD50AndSectorLeaderStockAnalyzeResult>> iterator = result.getResult().entrySet().iterator();
 			while(iterator.hasNext()) {
 				IBD50AndSectorLeaderStockAnalyzeResult singleStockResult = iterator.next().getValue();

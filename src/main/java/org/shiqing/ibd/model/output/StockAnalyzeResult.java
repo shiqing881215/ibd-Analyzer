@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.shiqing.ibd.model.TimePeriod;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 /**
@@ -22,6 +23,7 @@ public class StockAnalyzeResult {
 	
 	public StockAnalyzeResult() {
 		involvedSpreadsheets = Sets.newHashSet();
+		quotePerformance = Maps.newHashMap();
 	}
 	
 	public StockAnalyzeResult(String symbol, String name, Integer occurrence, Set<String> involvedSpreadsheets) {
@@ -57,6 +59,9 @@ public class StockAnalyzeResult {
 		this.involvedSpreadsheets = involvedSpreadsheets;
 	}
 	public Map<TimePeriod, Double> getQuotePerformance() {
+		if (quotePerformance == null) {
+			quotePerformance = Maps.newHashMap();
+		}
 		return quotePerformance;
 	}
 	public void setQuotePerformance(Map<TimePeriod, Double> quotePerformance) {

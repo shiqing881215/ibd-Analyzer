@@ -16,9 +16,9 @@ public class IBD50AndSectorLeaderSpreadsheetPrinter implements SpreadsheetPrinte
 		PrinterUtil.updateContext(this.getClass().getSimpleName());
 		
 		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
-				PrinterUtil.getPrintDate() + "_ibd50_plus_sector_leader" + ".xls";
+				PrinterUtil.getPrintDate("ibd50_plus_sector_leader") + "_ibd50_plus_sector_leader.xls";
 		
-		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}
 
 }

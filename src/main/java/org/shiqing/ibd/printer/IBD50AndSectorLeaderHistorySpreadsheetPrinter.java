@@ -44,7 +44,7 @@ public class IBD50AndSectorLeaderHistorySpreadsheetPrinter implements Spreadshee
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("Result");
-		List<String> titles = PrinterUtil.getOutputSpreadsheetTitle(IBD50AndSectorLeaderStockAnalyzeResult.class.getName());
+		List<String> titles = PrinterUtil.getTitles();
 		
 		Set<String> keyset = stockListAnalyzeResult.getResult().keySet();
 		int rownum = 0;

@@ -7,7 +7,7 @@ public class FilterUtil {
 
 	public static void updateContext(String className) {
 		Context context = ConfigFactory.get().getContextProvider().getContext();
-		context.setFilterName(className);
+		context.addFilterName(className);
 		ConfigFactory.get().getContextProvider().establishOrUpdateContext(context);
 	}
 }

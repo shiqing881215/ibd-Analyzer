@@ -14,7 +14,7 @@ import org.shiqing.ibd.config.ConfigFactory;
 public class IBD50SymbolFilter extends SymbolFilter {
 
 	/**
-	 * Return IBD 50
+	 * Return IBD 50 spreadsheet name
 	 */
 	@Override
 	protected String getFilteringCriteriaFile() {

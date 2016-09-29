@@ -1,12 +1,21 @@
 package org.shiqing.ibd.context;
 
+import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 public class ContextImpl implements Context {
 
 	private String scannerName;
 	private String analyzerName;
-	private String filterName;
-	private String enricherName;
+	private Set<String> filterNames;
+	private Set<String> enricherNames;
 	private String printerName;
+	
+	public ContextImpl() {
+		filterNames = Sets.newHashSet();
+		enricherNames = Sets.newHashSet();
+	}
 	
 	public String getScannerName() {
 		return scannerName;
@@ -16,12 +25,12 @@ public class ContextImpl implements Context {
 		return analyzerName;
 	}
 
-	public String getFilterName() {
-		return filterName;
+	public Set<String> getFilterNames() {
+		return filterNames;
 	}
 
-	public String getEnricherName() {
-		return enricherName;
+	public Set<String> getEnricherNames() {
+		return enricherNames;
 	}
 
 	public String getPrinterName() {
@@ -36,12 +45,12 @@ public class ContextImpl implements Context {
 		this.analyzerName = analyzerName;
 	}
 
-	public void setFilterName(String filterName) {
-		this.filterName = filterName;
+	public void addFilterName(String filterName) {
+		this.filterNames.add(filterName);
 	}
 
-	public void setEnricherName(String enricherName) {
-		this.enricherName = enricherName;
+	public void addEnricherName(String enricherName) {
+		this.enricherNames.add(enricherName);
 	}
 
 	public void setPrinterName(String printerName) {

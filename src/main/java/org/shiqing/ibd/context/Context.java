@@ -1,5 +1,7 @@
 package org.shiqing.ibd.context;
 
+import java.util.Set;
+
 /**
  * 
  * Interface defining the data shape storing in the context
@@ -22,13 +24,13 @@ public interface Context {
 	
 	public void setAnalyzerName(String analyzerName);
 	
-	public String getFilterName();
+	public Set<String> getFilterNames();
 	
-	public void setFilterName(String filterName);
+	public void addFilterName(String filterName);
 	
-	public String getEnricherName();
+	public Set<String> getEnricherNames();
 	
-	public void setEnricherName(String enricherName);
+	public void addEnricherName(String enricherName);
 	
 	public String getPrinterName();
 	

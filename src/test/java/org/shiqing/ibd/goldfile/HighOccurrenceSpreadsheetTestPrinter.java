@@ -19,7 +19,7 @@ public class HighOccurrenceSpreadsheetTestPrinter extends HighOccurrenceSpreadsh
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
 		String fileName = ConfigFactory.get().getPropertiesProvider().getValue("path.test.result") + "high_occurrence.xls";
 		
-		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}
 	
 }

@@ -16,9 +16,9 @@ public class HighOccurrenceSpreadsheetPrinter implements SpreadsheetPrinter {
 		PrinterUtil.updateContext(this.getClass().getSimpleName());
 		
 		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
-				PrinterUtil.getPrintDate() + "_high_occurence" + ".xls";
+				PrinterUtil.getPrintDate("high_occurence") + "_high_occurence.xls";
 		
-		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}
 
 }

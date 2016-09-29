@@ -46,4 +46,21 @@ public class AnalystUtil {
 		
 		return spreadsheets;
 	}
+	
+	/**
+	 * Get IPO LEADERS.xls raw spreadsheet
+	 * @return
+	 */
+	public static String getIPOSpreadsheet() {
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root"));
+		File[] files = root.listFiles();
+		
+		for (File file : files) {
+			if (file.isFile() && file.getName().contains("IPO")) {
+				return (String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName();
+			}
+		}
+		
+		return null;
+	}
 }

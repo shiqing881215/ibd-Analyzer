@@ -19,7 +19,7 @@ public class IBD50AndSectorLeaderSpreadsheetTestPrinter extends IBD50AndSectorLe
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
 		String fileName = ConfigFactory.get().getPropertiesProvider().getValue("path.test.result") + "ibd50_plus_sector_leader.xls";
 		
-		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, false, fileName);
+		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}
 	
 }
