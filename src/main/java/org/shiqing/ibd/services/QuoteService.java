@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.shiqing.ibd.exception.QuoteException;
 import org.shiqing.ibd.model.TimePeriod;
 
 import yahoofinance.Stock;
@@ -36,12 +37,17 @@ public class QuoteService {
 		}
 	}
 	
-	public Pair<Double, Double> getHistoryQuotes(String symbol, TimePeriod timePeriod) {
+	public Pair<Double, Double> getHistoryQuotes(String symbol, TimePeriod timePeriod) throws QuoteException {
 		Calendar from = Calendar.getInstance();
 		Calendar to = Calendar.getInstance();
 		from.add(Calendar.WEEK_OF_YEAR, -timePeriod.getNumberOfWeeks());
 		
-		final Stock stock = YahooFinance.get(symbol, true);
+		final Stock stock;
+		try {
+			stock = YahooFinance.get(symbol, true);
+		} catch (Exception e) {
+			throw new QuoteException(e);
+		}
 		// History is starting one previous day, so here even to is supposed to today, but it's actually yesterday TODO Re-test this during weekends
 		final List<HistoricalQuote> historyQuotes = stock.getHistory(from, to, Interval.DAILY);
 		
@@ -63,10 +69,5 @@ public class QuoteService {
 				return historyQuotes.get(historyQuotes.size()-1).getClose().doubleValue();
 			}
 		};
-	}
-	
-	public static void main(String[] args) {
-		QuoteService qs = new QuoteService();
-		System.out.println(qs.getHistoryQuotes("GRUB", TimePeriod.ONE_WEEK));
 	}
 }

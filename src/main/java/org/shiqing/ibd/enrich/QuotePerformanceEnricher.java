@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.shiqing.ibd.config.ConfigFactory;
+import org.shiqing.ibd.exception.QuoteException;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 import org.shiqing.ibd.model.TimePeriod;
 import org.shiqing.ibd.model.output.IBD50AndSectorLeaderStockAnalyzeResult;
@@ -61,13 +62,22 @@ public class QuotePerformanceEnricher implements Enricher {
 				singleStockResult.setThreeMonthsPerformance(threeMonthsPerformance);
 				singleStockResult.setSixMonthsPerformance(sixMonthsPerformance);
 			}
+			
+			return result;
 		}
 		
 		return null;
 	}
 
 	private double getQuotePerformance(String symbol, TimePeriod timePeriod) {
-		Pair<Double, Double> quotes = quoteService.getHistoryQuotes(symbol, timePeriod);
+		
+		Pair<Double, Double> quotes;
+		try {
+			quotes = quoteService.getHistoryQuotes(symbol, timePeriod);
+		} catch (QuoteException e) {
+			logger.error("Fail to get quote performance for " + symbol + " for " + timePeriod.getName(), e);
+			return Double.NaN;
+		}
 		log(symbol, quotes, timePeriod);
 		
 		return (quotes.getLeft() - quotes.getRight()) / quotes.getRight();

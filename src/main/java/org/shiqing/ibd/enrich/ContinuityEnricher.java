@@ -24,6 +24,9 @@ import com.google.common.collect.Lists;
 public class ContinuityEnricher implements Enricher {
 
 	public OutputSpreadsheet enrich(OutputSpreadsheet outputSpreadsheet) {
+		// Update the context first
+		EnricherUtil.updateContext(this.getClass().getSimpleName());
+		
 		IBD50AndSectorLeaderStockListAnalyzeResult result = (IBD50AndSectorLeaderStockListAnalyzeResult)outputSpreadsheet;
 		
 		Iterator<Entry<String, IBD50AndSectorLeaderStockAnalyzeResult>> iterator = result.getResult().entrySet().iterator();
