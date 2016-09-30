@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -162,6 +165,13 @@ public class PrinterUtil {
 					}
 				}
 			}
+		}
+		
+		// If result directory doesn't have any result yet for this analyst. Use current date
+		if (latestDate == null) {
+			DateFormat df = new SimpleDateFormat("MM_dd_yy");
+			
+			return df.format(new Date()); 
 		}
 		
 		LocalDate nextFriday = getNextFriday(LocalDate.of(

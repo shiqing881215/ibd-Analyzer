@@ -61,7 +61,8 @@ public class QuoteService {
 			
 			@Override
 			public Double getLeft() {
-				return stock.getQuote().getPrice().doubleValue();
+				return stock.getQuote().getPrice().doubleValue() > 0 ? 
+						stock.getQuote().getPrice().doubleValue() : historyQuotes.get(0).getClose().doubleValue();
 			}
 			
 			@Override
