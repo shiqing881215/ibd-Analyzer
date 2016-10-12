@@ -4,20 +4,20 @@ import org.shiqing.ibd.config.ConfigFactory;
 import org.shiqing.ibd.model.OutputSpreadsheet;
 
 /**
- * Printer for high occurrence analyze result.
+ * 
+ * Printer for accumulation / distribution analyze result.
  * 
  * @author shiqing
  *
  */
-public class HighOccurrenceSpreadsheetPrinter implements SpreadsheetPrinter {
+public class AccDisSpreadsheetPrinter implements SpreadsheetPrinter {
 
-	// TODO Generate the implementation here into util
 	public void generateResultSpreadsheet(OutputSpreadsheet outputSpreadsheet) {
 		// Update the context first
 		PrinterUtil.updateContext(this.getClass().getSimpleName());
-		
-		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") + 
-				PrinterUtil.getPrintDate("high_occurence") + "_high_occurence.xls";
+
+		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") 
+				+ PrinterUtil.getPrintDate("acc_dis") + ".xls";
 		
 		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}

@@ -171,7 +171,7 @@ public class PrinterUtil {
 		if (latestDate == null) {
 			DateFormat df = new SimpleDateFormat("MM_dd_yy");
 			
-			return df.format(new Date()); 
+			return df.format(new Date()) + "_" + fileNameKeyWord; 
 		}
 		
 		LocalDate nextFriday = getNextFriday(LocalDate.of(
