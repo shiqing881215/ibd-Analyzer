@@ -179,11 +179,10 @@ public class PrinterUtil {
 				Integer.parseInt(latestDate.substring(0, latestDate.indexOf("_"))),  // month 
 				Integer.parseInt(latestDate.substring(latestDate.indexOf("_")+1, latestDate.lastIndexOf("_")))));  // day
 		
-		String printDate = nextFriday.getMonthValue() < 10 ? 
-				"0" + nextFriday.getMonthValue() + "_" + nextFriday.getDayOfMonth() + "_" + nextFriday.getYear() :
-				nextFriday.getMonthValue() + "_" + nextFriday.getDayOfMonth() + "_" + nextFriday.getYear();
-				
-		return printDate;
+		String printMonth = nextFriday.getMonthValue() < 10 ? "0" + nextFriday.getMonthValue() : nextFriday.getMonthValue() + "";
+		String printDay = nextFriday.getDayOfMonth() < 10 ? "0" + nextFriday.getDayOfMonth() : nextFriday.getDayOfMonth() + "";
+		
+		return printMonth + "_" + printDay + "_" + nextFriday.getYear();
 	}
 	
 	/**

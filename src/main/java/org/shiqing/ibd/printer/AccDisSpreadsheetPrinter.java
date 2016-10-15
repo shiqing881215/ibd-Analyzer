@@ -17,7 +17,7 @@ public class AccDisSpreadsheetPrinter implements SpreadsheetPrinter {
 		PrinterUtil.updateContext(this.getClass().getSimpleName());
 
 		String fileName = (String)ConfigFactory.get().getPropertiesProvider().getValue("path.result") 
-				+ PrinterUtil.getPrintDate("acc_dis") + ".xls";
+				+ PrinterUtil.getPrintDate("acc_dis") + "_acc_dis.xls";
 		
 		PrinterUtil.generateResultSpreadsheet(outputSpreadsheet, fileName);
 	}
