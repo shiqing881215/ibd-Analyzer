@@ -160,8 +160,13 @@ public class PrinterUtil {
 				if (file.isFile()) {
 					if (latestDate == null) {
 						latestDate = fileName.substring(0, 8);
-					} else if (latestDate.compareTo(fileName.substring(0, 8)) < 0){
-						latestDate = fileName.substring(0, 8);
+					} else {
+						String newDate = fileName.substring(0, 8);
+						// year is the last two chars
+						if (newDate.substring(6).compareTo(latestDate.substring(6)) > 0 || 
+								(newDate.substring(6).compareTo(latestDate.substring(6)) == 0 && newDate.compareTo(latestDate) > 0)) {
+							latestDate = fileName.substring(0, 8);
+						}
 					}
 				}
 			}
