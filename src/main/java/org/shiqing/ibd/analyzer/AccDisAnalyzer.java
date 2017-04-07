@@ -35,7 +35,7 @@ public class AccDisAnalyzer implements Analyzer {
 						stock.getEPSRating() >= 80 &&
 						stock.getRSRating() >= 80 &&
 						stock.getSMRRating().contains("A") && 
-						stock.getACC_DISRating().equals("A+")) {
+						(stock.getACC_DISRating().equals("A+"))) {
 					result.addStockAnalyzeResult(stock, stockList.getName());
 				}
 			}

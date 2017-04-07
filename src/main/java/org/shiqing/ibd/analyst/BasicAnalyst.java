@@ -1,6 +1,5 @@
 package org.shiqing.ibd.analyst;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -44,7 +43,7 @@ public class BasicAnalyst extends Analyst {
 		return AnalystUtil.getIBDRawSpreadsheets();
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		logger.info("Running BasicAnalyst......");
 		
 		SpreadsheetScanner ratingScanner = new RatingScanner();

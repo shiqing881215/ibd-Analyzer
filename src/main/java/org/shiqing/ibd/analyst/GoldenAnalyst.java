@@ -23,6 +23,8 @@ import com.google.common.collect.Lists;
  * The major goal for this is to see which stock stays on these two lists most frequently and 
  * has the best continuity in a certain time period.
  * 
+ * Attention : this analyst needs to run after {@link BasicAnalyst} gets results
+ * 
  * @author shiqing
  *
  */

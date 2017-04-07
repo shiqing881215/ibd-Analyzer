@@ -1,51 +1,65 @@
-package org.shiqing.ibd.services;
+package org.shiqing.ibd.analyzer;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.shiqing.ibd.config.ConfigFactory;
-import org.shiqing.ibd.model.TimePeriod;
+import org.shiqing.ibd.model.InputSpreadsheet;
+import org.shiqing.ibd.model.OutputSpreadsheet;
+import org.shiqing.ibd.model.input.Stock;
+import org.shiqing.ibd.model.input.StockList;
+import org.shiqing.ibd.model.output.StockListAnalyzeResult;
 
 import com.google.common.collect.Lists;
 
-import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
-public class QuoteServiceTest {
+/**
+ * Analyzer for stock shape
+ * 
+ * @author shiqing
+ *
+ */
+public class ShapeAnalyzer implements Analyzer {
 
-	public static void main(String[] args) throws Exception {
-//		((QuoteService)ConfigFactory.get().getBean("quoteService")).getHistoryQuotes("^IXIC", TimePeriod.ONE_WEEK);
-		((QuoteService)ConfigFactory.get().getBean("quoteService")).getHistoryQuotes("CRM", TimePeriod.ONE_WEEK);
+	public OutputSpreadsheet analyze(List<InputSpreadsheet> inputSpreadsheets) {
+		// First update the context
+		AnalyzerUtil.updateContext(this.getClass().getSimpleName());
 		
-		Calendar from = Calendar.getInstance();
-		Calendar to = Calendar.getInstance();
-		from.add(Calendar.WEEK_OF_YEAR, -52);
+		StockListAnalyzeResult result = new StockListAnalyzeResult();
 		
-		Stock stock = YahooFinance.get("cohr", true);
-		final List<HistoricalQuote> historyQuotes = stock.getHistory(from, to, Interval.DAILY);
+		for (InputSpreadsheet inputSpreadsheet : inputSpreadsheets) {
+			StockList stockList = (StockList)inputSpreadsheet;
+			for (Stock stock : stockList.getStocks()) {
+				if (isCupShape(stock.getSymbol())) {
+					result.addStockAnalyzeResult(stock, stockList.getName());
+				}
+			}
+		}
 		
-		System.out.println(historyQuotes);
-		System.out.println(stock.getSymbol() + " is in cup shape ? " + isCupShape(historyQuotes));
+		return result;
 	}
 	
 	/**
 	 * Detect whether the stock is a good cup shape given the historical quotes.
 	 * 
-	 * The way to detect this :
-	 * 1. Find the highest quote in history data
-	 * 2. Detect current price is lower but close to history high
-	 * 3. Detect the very first price has a gap with history high
-	 * 4. Time gap between current price and history high should NOT be too short
+	 * 04/06/17 - Right now I have two raw rules to define the cup shape. TODO A better way to detect cup shape (machine learning ???)
 	 * 
-	 * 
-	 * @param quotes - history quote ordering from latest to oldest
-	 * @return
+	 * @param quotes - history quote ordering from latest (current) to oldest
+	 * @return false/true based on whether stock is in a cup shape
 	 */
-	private static boolean isCupShape(List<HistoricalQuote> quotes) {
+	private boolean isCupShape(String stockSymbol) {
+		yahoofinance.Stock stock = YahooFinance.get(stockSymbol, true);
+		
+		// Retrieve back for 1 year data
+		Calendar from = Calendar.getInstance();
+		Calendar to = Calendar.getInstance();
+		from.add(Calendar.WEEK_OF_YEAR, -52);
+		List<HistoricalQuote> quotes = stock.getHistory(from, to, Interval.DAILY);
+		
 		HistoricalQuote high = null, low = null, current = quotes.get(0);
 		Double highPrice = Double.MIN_VALUE, lowPrice = Double.MAX_VALUE, currentPrice = current.getClose().doubleValue(); 
 		

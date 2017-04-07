@@ -63,4 +63,21 @@ public class AnalystUtil {
 		
 		return null;
 	}
+
+	/**
+	 * Get IBD 50.xml raw spreadsheet
+	 * @return
+	 */
+	public static String getIBD50ResultSpreadsheets() {
+		File root = new File((String)ConfigFactory.get().getPropertiesProvider().getValue("path.root"));
+		File[] files = root.listFiles();
+		
+		for (File file : files) {
+			if (file.isFile() && file.getName().contains("IBD") && file.getName().contains("50")) {
+				return (String)ConfigFactory.get().getPropertiesProvider().getValue("path.root") + file.getName();
+			}
+		}
+		
+		return null;
+	}
 }
